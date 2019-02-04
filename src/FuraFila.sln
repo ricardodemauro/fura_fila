@@ -11,13 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuraFila.Domain", "FuraFila
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuraFila.Repository.SQlite", "FuraFila.Repository.SQlite\FuraFila.Repository.SQlite.csproj", "{D4C7FEE4-53CF-4D7B-B375-10189FB9BD7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuraFila.Payments.MercadoPago", "FuraFila.Payments.MercadoPago\FuraFila.Payments.MercadoPago.csproj", "{6400E80C-6DBD-4537-8CED-16F411D8FF8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuraFila.Payments.MercadoPago", "FuraFila.Payments.MercadoPago\FuraFila.Payments.MercadoPago.csproj", "{6400E80C-6DBD-4537-8CED-16F411D8FF8E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PaymentsIntegrations", "PaymentsIntegrations", "{D919F44E-56B6-4876-96DF-13ACAB123DB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercadoPagoSDK", "MercadoPagoSDK\MercadoPagoSDK.csproj", "{3D7342DA-28F9-4FF9-9893-D428A04BE7A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MercadoPagoSDK", "MercadoPagoSDK\MercadoPagoSDK.csproj", "{3D7342DA-28F9-4FF9-9893-D428A04BE7A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercadoPagoSDK.Test", "MercadoPagoSDK.Test\MercadoPagoSDK.Test.csproj", "{8E0E8C0D-3015-4978-9CCC-E7AA401ED183}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MercadoPagoSDK.Test", "MercadoPagoSDK.Test\MercadoPagoSDK.Test.csproj", "{8E0E8C0D-3015-4978-9CCC-E7AA401ED183}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

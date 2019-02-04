@@ -18,7 +18,7 @@ namespace MercadoPagoSDK.Test.Resources
             // Avoid SSL Cert error
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
             // HardCoding Credentials
-            AccessToken = Environment.GetEnvironmentVariable("ACCESS_TOKEN");
+            AccessToken = TestConfig.GetEnvironmentVariable("ACCESS_TOKEN");
             
             // Make a Clean Test
             SDK.CleanConfiguration();
