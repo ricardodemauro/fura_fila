@@ -1,0 +1,20 @@
+﻿@model FuraFila.Domain.Models.PaymentRequest
+
+@{
+    ViewData["Title"] = "Mercado Pago";
+}
+
+@section header
+    {
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+}
+
+<h2>Mecardo Pago</h2>
+
+
+<form asp-action="mercadopagocallback" asp-controller="payment" method="POST">
+    <script src="https://www.mercadopago.com.br/integrations/v1/web-tokenize-checkout.js"
+            data-public-key="@Model.Id"
+            data-transaction-amount="@Model.Amount">
+    </script>
+</form>

@@ -5,13 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FuraFila.Domain
+namespace FuraFila.Domain.Models
 {
     public class Order : IEntity
     {
         public int Id { get; set; }
 
         public decimal Value { get; set; }
+
+        public string Description { get; set; }
 
         public bool Paid { get; set; }
 

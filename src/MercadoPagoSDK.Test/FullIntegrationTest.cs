@@ -20,7 +20,8 @@ namespace MercadoPagoSDK.Test
             SDK.CleanConfiguration();
             SDK.SetBaseUrl("https://api.mercadopago.com");
             Dictionary<string, string> config = new Dictionary<string, string>();
-            SDK.AccessToken = Environment.GetEnvironmentVariable("ACCESS_TOKEN");
+            SDK.AccessToken = TestConfig.GetEnvironmentVariable("ACCESS_TOKEN");
+
 
             //Customer customer = new Customer();
 

@@ -1,4 +1,5 @@
-﻿using FuraFila.Repository.SQlite.DependencyInjection;
+﻿using FuraFila.Domain.Models;
+using FuraFila.Repository.SQlite.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,13 +18,13 @@ namespace FuraFila.Repository.SQlite.Seeds
 
             if (!dbContext.Sellers.Any())
             {
-                dbContext.Sellers.Add(new Domain.Seller
+                dbContext.Sellers.Add(new Seller
                 {
                     Active = true,
                     Name = "Seller sample",
                 });
 
-                dbContext.Customers.Add(new Domain.Customer
+                dbContext.Customers.Add(new Customer
                 {
                     Name = "Customer sample"
                 });

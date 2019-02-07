@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FuraFila.Domain
+namespace FuraFila.Domain.Models
 {
     public class Seller : IEntity
     {
