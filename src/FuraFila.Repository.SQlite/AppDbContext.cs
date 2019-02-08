@@ -1,4 +1,5 @@
 ﻿using FuraFila.Domain;
+using FuraFila.Domain.Models;
 using FuraFila.Repository.SQlite.Configurations;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace FuraFila.Repository.SQlite
 
         public AppDbContext(DbContextOptions options) : base(options)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

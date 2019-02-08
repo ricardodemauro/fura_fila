@@ -38,6 +38,13 @@ namespace FuraFila.WebApp
             string connection = Configuration.GetConnectionString("Core");
             services.AddDbContext<AppDbContext>(opts => opts.UseSqlite(connection))
                         .WithSeed<AppDbContext>(seedAction: ctx => DataSeed.Seed(ctx));
+
+            services.AddOptions();
+            services.AddHttpClient();
+
+
+            Bootstrapper.RegisterHandlers(services, Configuration);
+            Bootstrapper.RegisterPaymentServices(services, Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
