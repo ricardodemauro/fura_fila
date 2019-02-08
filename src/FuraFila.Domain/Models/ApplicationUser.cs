@@ -9,8 +9,10 @@ namespace FuraFila.Domain.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        [PersonalData]
         public string Name { get; set; }
 
+        [PersonalData]
         public string SurName { get; set; }
     }
 }
