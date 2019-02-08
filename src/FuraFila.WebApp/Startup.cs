@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using FuraFila.Domain.Models;
 using Microsoft.AspNetCore.Identity.UI;
 using System;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace FuraFila.WebApp
 {
@@ -34,7 +35,11 @@ namespace FuraFila.WebApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(opts =>
+            {
+                opts.Filters.Add(new AuthorizeFilter());
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             string connection = Configuration.GetConnectionString("Core");
             services.AddDbContext<AppDbContext>(opts => opts.UseSqlite(connection))
@@ -66,7 +71,7 @@ namespace FuraFila.WebApp
                 opts.Cookie.HttpOnly = true;
                 opts.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 
-                opts.LoginPath = "/login";
+                opts.LoginPath = "/identity/account/login";
                 opts.AccessDeniedPath = "/acesso-negado";
                 opts.SlidingExpiration = true;
             });
@@ -94,9 +99,10 @@ namespace FuraFila.WebApp
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            app.UseCookiePolicy();
 
             app.UseMvc(routes =>
             {
