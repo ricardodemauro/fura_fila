@@ -13,13 +13,17 @@
     
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.1" />
     
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FuraFila.Domain\FuraFila.Domain.csproj" />
     <ProjectReference Include="..\FuraFila.Payments.MercadoPago\FuraFila.Payments.MercadoPago.csproj" />
     <ProjectReference Include="..\FuraFila.Repository.SQlite\FuraFila.Repository.SQlite.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Application\Validators\" />
   </ItemGroup>
 
 </Project>

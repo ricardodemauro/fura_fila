@@ -2,12 +2,13 @@
 using FuraFila.Domain.Models;
 using FuraFila.Repository.SQlite.Configurations;
 using JetBrains.Annotations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace FuraFila.Repository.SQlite
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Customer> Customers { get; set; }
 
@@ -25,7 +26,6 @@ namespace FuraFila.Repository.SQlite
             modelBuilder.ApplyConfiguration(new CustomersConfiguration());
             modelBuilder.ApplyConfiguration(new OrdersConfiguration());
             modelBuilder.ApplyConfiguration(new SellersConfiguration());
-
 
             //relations
             modelBuilder.Entity<Seller>()

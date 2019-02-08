@@ -8,6 +8,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using FuraFila.Repository.SQlite.DependencyInjection;
 using FuraFila.Repository.SQlite.Seeds;
+using Microsoft.AspNetCore.Identity;
+using FuraFila.Domain.Models;
+using Microsoft.AspNetCore.Identity.UI;
+using System;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace FuraFila.WebApp
 {
@@ -30,18 +35,49 @@ namespace FuraFila.WebApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            //services.AddOptions();
+            services.AddMvc(opts =>
+            {
+                opts.Filters.Add(new AuthorizeFilter());
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             string connection = Configuration.GetConnectionString("Core");
             services.AddDbContext<AppDbContext>(opts => opts.UseSqlite(connection))
                         .WithSeed<AppDbContext>(seedAction: ctx => DataSeed.Seed(ctx));
 
+            services.AddIdentity<ApplicationUser, IdentityRole>(opts => opts.Stores.MaxLengthForKeys = 128)
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultUI(UIFramework.Bootstrap4)
+                .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(opts =>
+            {
+                opts.Password.RequireDigit = true;
+                opts.Password.RequireLowercase = true;
+                opts.Password.RequiredLength = 6;
+
+                opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                opts.Lockout.MaxFailedAccessAttempts = 5;
+                opts.Lockout.AllowedForNewUsers = true;
+
+                // User settings.
+                opts.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                opts.User.RequireUniqueEmail = true;
+            });
+
+            services.ConfigureApplicationCookie(opts =>
+            {
+                opts.Cookie.HttpOnly = true;
+                opts.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+                opts.LoginPath = "/identity/account/login";
+                opts.AccessDeniedPath = "/acesso-negado";
+                opts.SlidingExpiration = true;
+            });
+
             services.AddOptions();
             services.AddHttpClient();
-
 
             Bootstrapper.RegisterHandlers(services, Configuration);
             Bootstrapper.RegisterPaymentServices(services, Configuration);
@@ -57,11 +93,15 @@ namespace FuraFila.WebApp
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseAuthentication();
+
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>
