@@ -19,3 +19,18 @@ https://andrewlock.net/implementing-custom-token-providers-for-passwordless-auth
 `https://rick-furafila.herokuapp.com/`
 
 Still missing env variables... WIP
+
+
+# publishing to heroku
+
+`heroku login`
+
+`docker build -t rick/furafila:heroku -f Dockerfile.heroku .`
+
+`docker run -p 5000:5000 -d -e PORT=5000 rick/furafila:heroku`
+
+`docker tag rick/furafila:heroku registry.heroku.com/rick-furafila/web`
+
+`docker push registry.heroku.com/rick-furafila/web`
+
+`heroku container:release web -a rick-furafila`
