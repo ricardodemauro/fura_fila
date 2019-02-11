@@ -26,4 +26,10 @@
     <Folder Include="Application\Validators\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="core.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

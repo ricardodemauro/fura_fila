@@ -13,3 +13,9 @@
 - Implementing custom token providers for passwordless authentication in ASP.NET Core Identity
 
 https://andrewlock.net/implementing-custom-token-providers-for-passwordless-authentication-in-asp-net-core-identity/
+
+# heroku url
+
+`https://rick-furafila.herokuapp.com/`
+
+Still missing env variables... WIP
