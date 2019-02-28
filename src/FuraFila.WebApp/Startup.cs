@@ -76,6 +76,13 @@ namespace FuraFila.WebApp
                 opts.SlidingExpiration = true;
             });
 
+            services.AddAuthentication()
+                .AddFacebook(cfg =>
+                {
+                    cfg.AppId = Configuration["Authentication:FacebookAppId"];
+                    cfg.AppSecret = Configuration["Authentication:FacebookAppSecret"];
+                });
+
             services.AddOptions();
             services.AddHttpClient();
 
