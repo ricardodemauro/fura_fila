@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FuraFila.Domain.Payments
+namespace FuraFila.Payments.PagSeguro
 {
-    public enum PaymentBrokers
+    public static class Constants
     {
-        MercadoPago,
-        PagSeguro
+        internal const string CURRENCY_BRL = "BRL";
     }
 }

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FuraFila.Domain\FuraFila.Domain.csproj" />
+    <ProjectReference Include="..\FuraFila.Payments.Core\FuraFila.Payments.Core.csproj" />
     <ProjectReference Include="..\FuraFila.Payments.MercadoPago\FuraFila.Payments.MercadoPago.csproj" />
     <ProjectReference Include="..\FuraFila.Repository.SQlite\FuraFila.Repository.SQlite.csproj" />
   </ItemGroup>

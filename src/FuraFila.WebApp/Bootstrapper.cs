@@ -1,4 +1,5 @@
 ﻿using FuraFila.Domain.Payments;
+using FuraFila.Payments.Core;
 using FuraFila.Payments.MercadoPago;
 using FuraFila.Payments.MercadoPago.Configuration;
 using FuraFila.Payments.MercadoPago.Services;
@@ -37,6 +38,8 @@ namespace FuraFila.WebApp
             });
 
             services.AddSingleton<IPaymentService, MPPaymentService>();
+
+            services.AddSingleton<PaymentServiceLocator>();
         }
     }
 }

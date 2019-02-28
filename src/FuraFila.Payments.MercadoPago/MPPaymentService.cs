@@ -29,9 +29,9 @@ namespace FuraFila.Payments.MercadoPago
         public async Task<CreatePaymentCommandResponse> CreatePaymentRequest(CreatePaymentCommandRequest request)
         {
             var body = new PreferenceRequest();
-            body.Items = new List<Models.Item>();
+            body.Items = new List<Item>();
 
-            Models.Item item1 = new Models.Item
+            Item item1 = new Item
             {
                 Id = "2334234",
                 Description = request.Order.Description,
