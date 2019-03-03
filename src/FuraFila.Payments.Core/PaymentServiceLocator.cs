@@ -1,5 +1,7 @@
 ﻿using FuraFila.Domain.Payments;
+using FuraFila.Domain.Payments.Interfaces;
 using FuraFila.Payments.MercadoPago;
+using FuraFila.Payments.PagSeguro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +28,7 @@ namespace FuraFila.Payments.Core
                     case PaymentBrokers.MercadoPago:
                         return _svcProvider.GetService(typeof(MPPaymentService)) as IPaymentService;
                     case PaymentBrokers.PagSeguro:
+                        return _svcProvider.GetService(typeof(PagSeguroPaymentService)) as IPaymentService;
                     default:
                         throw new NotImplementedException();
                 }

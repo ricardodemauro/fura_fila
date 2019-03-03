@@ -1,13 +1,11 @@
 ﻿using FuraFila.Domain.Commands;
-using FuraFila.Domain.Payments;
+using FuraFila.Domain.Payments.Interfaces;
+using FuraFila.Domain.Payments.Models;
 using FuraFila.Payments.PagSeguro.Configuration;
 using FuraFila.Payments.PagSeguro.Models;
 using FuraFila.Payments.PagSeguro.Services;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FuraFila.Payments.PagSeguro
@@ -23,21 +21,21 @@ namespace FuraFila.Payments.PagSeguro
             _service = service;
         }
 
-        public async Task<CreatePaymentCommandResponse> CreatePaymentRequest(CreatePaymentCommandRequest request)
+        public async Task<PaymentResponse> CreatePaymentRequest(PaymentRequest request, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var body = new Checkout();
+            var body = new CheckoutRequest();
 
-            body.Sender = new checkoutSender
+            body.Sender = new Sender
             {
-                name = request.Customer.Name,
-                email = request.Customer.Email
+                Name = request.Customer.Name,
+                Email = request.Customer.Email
             };
 
             body.Currency = Constants.CURRENCY_BRL;
 
-            body.Items = new CheckoutItem[]
+            body.Items = new Item[]
             {
-                new CheckoutItem
+                new Item
                 {
                     Amount = 1,
                     Description = request.Order.Description,
@@ -50,32 +48,34 @@ namespace FuraFila.Payments.PagSeguro
 
             body.RedirectURL = _options.CallbackUrl;
 
-            body.extraAmount = 0;
-            body.reference = "" + request.Order.Id;
+            body.ExtraAmount = 0;
+            body.Reference = "" + request.Order.Id;
 
-            body.shipping = null;
+            body.Shipping = null;
 
-            body.timeout = 25;
-            body.maxAge = int.MaxValue;
-            body.maxUses = 5;
-            body.receiver = new checkoutReceiver
+            body.Timeout = 25;
+            body.MaxAge = int.MaxValue;
+            body.MaxUses = 5;
+            body.Receiver = new Receiver
             {
-                email = request.Customer.Email
+                Email = request.Customer.Email
             };
 
-            body.enableRecover = false;
+            body.EnableRecover = false;
 
-            var rs = await _service.SendRequest<Checkout, CheckoutResult>(body, _options.AccessToken);
+            var rs = await _service.Checkout(body, _options.AccessToken, _options.Email, cancellationToken);
 
-            return new CreatePaymentCommandResponse
+            var paymentResponse = new PaymentResponse
             {
-                PaymentRequest = new Domain.Models.PaymentRequest
+                RequestRedirect = new Domain.Models.PaymentRequestRedirect
                 {
                     Amount = request.Order.Value,
-                    Id = rs.Id,
-                    RedirectUri = this.GetRedirectUrl(rs.InitPoint, rs.SandboxInitPoint, _options)
+                    Id = rs.Code,
+                    RedirectUri = this.GetPagSeguroPaymentUrl(rs.Code, _options)
                 }
             };
+
+            return paymentResponse;
         }
     }
 }

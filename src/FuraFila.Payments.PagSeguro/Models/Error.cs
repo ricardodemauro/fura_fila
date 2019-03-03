@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace FuraFila.Payments.PagSeguro.Models
 {
+    [Serializable()]
     [DataContract]
     public class Error
     {

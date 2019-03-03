@@ -7,14 +7,17 @@ using System.Threading.Tasks;
 
 namespace FuraFila.Payments.PagSeguro.Models
 {
+    /// <summary>
+    /// Dados do vendedor
+    /// </summary>
     [Serializable()]
     [DataContract]
-    public class CheckoutResult : ResultBase
+    public class Receiver
     {
+        /// <summary>
+        /// Especifica o e-mail que deve aparecer na tela de pagamento
+        /// </summary>
         [DataMember]
-        public string Code { get; set; }
-
-        [DataMember]
-        public DateTime Date { get; set; }
+        public string Email { get; set; }
     }
 }

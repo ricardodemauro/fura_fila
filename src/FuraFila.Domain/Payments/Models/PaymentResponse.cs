@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FuraFila.Domain.Commands
+namespace FuraFila.Domain.Payments.Models
 {
-    public class CreatePaymentCommandResponse
+    public class PaymentResponse
     {
-        public PaymentRequestRedirect PaymentRequest { get; set; }
+        public PaymentRequestRedirect RequestRedirect { get; set; }
     }
 }

@@ -9,12 +9,10 @@ namespace FuraFila.Payments.PagSeguro.Models
 {
     [Serializable()]
     [DataContract]
-    public class CheckoutResult : ResultBase
+    public static class DocumentTypes
     {
-        [DataMember]
-        public string Code { get; set; }
+        public const string CPF = nameof(CPF);
 
-        [DataMember]
-        public DateTime Date { get; set; }
+        public const string CNPJ = nameof(CNPJ);
     }
 }

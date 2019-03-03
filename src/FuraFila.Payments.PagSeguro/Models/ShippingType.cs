@@ -9,12 +9,13 @@ namespace FuraFila.Payments.PagSeguro.Models
 {
     [Serializable()]
     [DataContract]
-    public class CheckoutResult : ResultBase
+    public enum ShippingType
     {
         [DataMember]
-        public string Code { get; set; }
-
+        PAC = 1,
         [DataMember]
-        public DateTime Date { get; set; }
+        SEDEX = 2,
+        [DataMember]
+        NaoEspecificado = 3
     }
 }

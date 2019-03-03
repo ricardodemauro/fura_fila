@@ -9,12 +9,18 @@ namespace FuraFila.Payments.PagSeguro.Models
 {
     [Serializable()]
     [DataContract]
-    public class CheckoutResult : ResultBase
+    public class Sender
     {
         [DataMember]
-        public string Code { get; set; }
+        public string Name { get; set; }
 
         [DataMember]
-        public DateTime Date { get; set; }
+        public string Email { get; set; }
+
+        [DataMember]
+        public Phone Phone { get; set; }
+
+        [DataMember]
+        public Document[] Documents { get; set; }
     }
 }

@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace FuraFila.Payments.PagSeguro.Models
 {
+    [Serializable()]
     [DataContract]
     public abstract class ResultBase
     {
         [DataMember]
-        public List<Error> Errors { get; set; }
+        public Error[] Errors { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using FuraFila.Domain.Models;
+﻿using FuraFila.Domain.Infrastructure;
+using FuraFila.Domain.Models;
+using FuraFila.Domain.Payments;
 using FuraFila.Payments.Core;
 using System;
 using System.Collections.Generic;
@@ -8,12 +10,10 @@ using System.Threading.Tasks;
 
 namespace FuraFila.Domain.Commands
 {
-    public class CreatePaymentCommandRequest
+    public class CreatePaymentCommandRequest : ServiceRequestBase, IRequestContext
     {
-        public Customer Customer { get; set; }
+        public string PublicOrderId { get; set; }
 
-        public Order Order { get; set; }
-
-        public PaymentMethods[] PaymentMethods { get; set; }
+        public PaymentBrokers? Broker { get; set; }
     }
 }

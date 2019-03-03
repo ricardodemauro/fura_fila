@@ -13,5 +13,11 @@ namespace FuraFila.Payments.PagSeguro.Configuration
         public bool IsSandbox { get; set; }
 
         public string CallbackUrl { get; set; }
+
+        public string Email { get; set; }
+
+        public string PaymentUrl { get; set; }
+
+        public string PaymentUrlSandbox { get; set; }
     }
 }
