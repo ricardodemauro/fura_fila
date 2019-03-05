@@ -1,10 +1,8 @@
 ﻿using FuraFila.Domain.Commands;
 using FuraFila.WebApp.Application;
+using FuraFila.WebApp.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FuraFila.WebApp.Controllers
@@ -25,26 +23,35 @@ namespace FuraFila.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> MercadoPago()
+        public async Task<IActionResult> MercadoPago(string publicOrderId)
         {
-            CreatePaymentCommandResponse rs = await _paymentRequestHandler.Handle(new CreatePaymentCommandRequest
-            {
-                Customer = new Domain.Models.Customer
-                {
-                    Email = "ricardo@email.com"
-                },
-                Order = new Domain.Models.Order
-                {
-                    Description = "rango",
-                    Paid = false,
-                    Value = 10.4m
-                },
-            });
-            // return View(rs.PaymentRequest);
-            return RedirectPermanent(rs.PaymentRequest.RedirectUri);
+            var rq = this.CreateServiceRequest<CreatePaymentCommandRequest>();
+            rq.PublicOrderId = publicOrderId;
+            rq.Broker = Domain.Payments.PaymentBrokers.MercadoPago;
+
+            CreatePaymentCommandResponse rs = await _paymentRequestHandler.Handle(rq);
+            return RedirectPermanent(rs.PaymentRequest.RedirectUri.AbsoluteUri);
         }
 
+        [HttpGet]
         public IActionResult MercadoPagoCallback()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> PagSeguro(string publicOrderId)
+        {
+            var rq = this.CreateServiceRequest<CreatePaymentCommandRequest>();
+            rq.PublicOrderId = publicOrderId;
+            rq.Broker = Domain.Payments.PaymentBrokers.PagSeguro;
+
+            CreatePaymentCommandResponse rs = await _paymentRequestHandler.Handle(rq);
+            return RedirectPermanent(rs.PaymentRequest.RedirectUri.AbsoluteUri);
+        }
+
+        [HttpGet]
+        public IActionResult PagSeguroCallback()
         {
             return View();
         }

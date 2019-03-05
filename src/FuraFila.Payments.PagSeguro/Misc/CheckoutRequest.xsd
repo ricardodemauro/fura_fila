@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="checkout">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="sender">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name" type="xs:string" />
+              <xs:element name="email" type="xs:string" />
+              <xs:element name="phone">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="areaCode" type="xs:unsignedByte" />
+                    <xs:element name="number" type="xs:unsignedInt" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="documents">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="document">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="type" type="xs:string" />
+                          <xs:element name="value" type="xs:unsignedLong" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="currency" type="xs:string" />
+        <xs:element name="items">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="item">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="id" type="xs:unsignedByte" />
+                    <xs:element name="description" type="xs:string" />
+                    <xs:element name="amount" type="xs:decimal" />
+                    <xs:element name="quantity" type="xs:unsignedByte" />
+                    <xs:element name="weight" type="xs:unsignedByte" />
+                    <xs:element name="shippingCost" type="xs:decimal" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="redirectURL" type="xs:string" />
+        <xs:element name="extraAmount" type="xs:decimal" />
+        <xs:element name="reference" type="xs:string" />
+        <xs:element name="shipping">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="address">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="street" type="xs:string" />
+                    <xs:element name="number" type="xs:unsignedShort" />
+                    <xs:element name="complement" type="xs:string" />
+                    <xs:element name="district" type="xs:string" />
+                    <xs:element name="city" type="xs:string" />
+                    <xs:element name="state" type="xs:string" />
+                    <xs:element name="country" type="xs:string" />
+                    <xs:element name="postalCode" type="xs:unsignedInt" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="type" type="xs:unsignedByte" />
+              <xs:element name="cost" type="xs:decimal" />
+              <xs:element name="addressRequired" type="xs:boolean" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="timeout" type="xs:unsignedByte" />
+        <xs:element name="maxAge" type="xs:unsignedInt" />
+        <xs:element name="maxUses" type="xs:unsignedShort" />
+        <xs:element name="receiver">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="email" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="enableRecover" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,30 +1,60 @@
 ﻿using FuraFila.Domain.Commands;
-using FuraFila.Domain.Payments;
+using FuraFila.Domain.Payments.Models;
+using FuraFila.Payments.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using FuraFila.Identity;
 
 namespace FuraFila.WebApp.Application
 {
     public class PaymentRequestHandler
     {
-        private readonly IPaymentService _paymentService;
+        private readonly PaymentServiceLocator _locator;
 
-        public PaymentRequestHandler(IPaymentService paymentService)
+        public PaymentRequestHandler(PaymentServiceLocator locator)
         {
-            _paymentService = paymentService ?? throw new ArgumentNullException(nameof(paymentService));
+            _locator = locator ?? throw new ArgumentNullException(nameof(locator));
         }
 
-        public Task<CreatePaymentCommandResponse> Handle(CreatePaymentCommandRequest request)
+        public async Task<CreatePaymentCommandResponse> Handle(CreatePaymentCommandRequest request)
         {
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
 
-            var rs = _paymentService.CreatePaymentRequest(request);
+            if (!request.Broker.HasValue)
+                throw new ArgumentNullException(nameof(request.Broker));
 
-            return rs;
+            var customer = new Domain.Models.Customer
+            {
+                Email = request.User.GetEmail(),
+                Name = request.User.GetName(),
+                SurName = request.User.GetSurname(),
+                DateOfBirth = request.User.GetDateOfBirth(),
+                Phone = request.User.GetPhone()
+            };
+            var order = new Domain.Models.Order
+            {
+                Description = "rango",
+                Paid = false,
+                Value = 10.4m
+            };
+
+            var svc = _locator[request.Broker.Value];
+
+            var paymentRequest = new PaymentRequest
+            {
+                Customer = customer,
+                Order = order
+            };
+
+            var paymentResponse = await svc.CreatePaymentRequest(paymentRequest);
+
+            var cmdResponse = new CreatePaymentCommandResponse
+            {
+                PaymentRequest = paymentResponse.RequestRedirect
+            };
+
+            return cmdResponse;
         }
     }
 }

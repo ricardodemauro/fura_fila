@@ -34,3 +34,30 @@ Still missing env variables... WIP
 `docker push registry.heroku.com/rick-furafila/web`
 
 `heroku container:release web -a rick-furafila`
+
+# Pagseguro references
+
+`https://dev.pagseguro.uol.com.br/reference`
+
+# Pagseguro Cartao credito de testes
+
+Número
+4111 1111 1111 1111
+
+Bandeira
+VISA
+
+Valido até
+12/2030
+
+CVV
+123
+
+# Pagseguro comprador sandbox
+
+xxxxxxx@sandbox.pagseguro.com.br.
+
+
+# Xml serialization we are using extendedxmlserializer
+
+https://github.com/wojtpl2/ExtendedXmlSerializer

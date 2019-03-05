@@ -9,6 +9,6 @@ namespace FuraFila.Domain.Commands
 {
     public class CreatePaymentCommandResponse
     {
-        public PaymentRequest PaymentRequest { get; set; }
+        public PaymentRequestRedirect PaymentRequest { get; set; }
     }
 }

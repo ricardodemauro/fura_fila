@@ -14,5 +14,8 @@ namespace FuraFila.Domain.Models
 
         [PersonalData]
         public string SurName { get; set; }
+
+        [PersonalData]
+        public DateTime? DateOfBirth { get; set; }
     }
 }

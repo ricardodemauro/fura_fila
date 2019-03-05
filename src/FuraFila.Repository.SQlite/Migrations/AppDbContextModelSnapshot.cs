@@ -26,6 +26,8 @@ namespace FuraFila.Repository.SQlite.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<DateTime?>("DateOfBirth");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -75,11 +77,17 @@ namespace FuraFila.Repository.SQlite.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("AreaCode");
+
+                    b.Property<DateTime?>("DateOfBirth");
+
                     b.Property<string>("Email");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200);
+
+                    b.Property<string>("Phone");
 
                     b.Property<string>("SurName");
 
@@ -189,11 +197,9 @@ namespace FuraFila.Repository.SQlite.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -224,11 +230,9 @@ namespace FuraFila.Repository.SQlite.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 

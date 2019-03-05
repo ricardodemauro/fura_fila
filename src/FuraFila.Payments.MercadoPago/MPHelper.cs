@@ -1,4 +1,5 @@
 ﻿using FuraFila.Domain.Payments;
+using FuraFila.Domain.Payments.Interfaces;
 using FuraFila.Payments.MercadoPago.Configuration;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,11 @@ namespace FuraFila.Payments.MercadoPago
 {
     public static class MPHelper
     {
-        public static string GetRedirectUrl(this IPaymentService service, string url, string sandboxUrl, MercadoPagoOptions options)
+        public static Uri GetMPRedirectUrl(this MPPaymentService service, string url, string sandboxUrl, MercadoPagoOptions options)
         {
-            return options.IsSandbox ? sandboxUrl : url;
+            string uri = options.IsSandbox ? sandboxUrl : url;
+
+            return new Uri(uri);
         }
     }
 }

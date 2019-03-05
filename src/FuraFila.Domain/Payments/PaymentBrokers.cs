@@ -8,6 +8,7 @@ namespace FuraFila.Domain.Payments
 {
     public enum PaymentBrokers
     {
-        MercadoPago
+        MercadoPago,
+        PagSeguro
     }
 }

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace FuraFila.Domain.Models
 {
-    public class PaymentRequest
+    public class PaymentRequestRedirect
     {
         public decimal Amount { get; set; }
 
         public string Id { get; set; }
 
-        public string RedirectUri { get; set; }
+        public Uri RedirectUri { get; set; }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using FuraFila.Domain.Commands;
 using FuraFila.Domain.Payments;
+using FuraFila.Domain.Payments.Interfaces;
+using FuraFila.Domain.Payments.Models;
 using FuraFila.Payments.MercadoPago.Configuration;
 using FuraFila.Payments.MercadoPago.Models;
 using FuraFila.Payments.MercadoPago.Preferences;
@@ -11,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FuraFila.Payments.MercadoPago
@@ -26,12 +29,12 @@ namespace FuraFila.Payments.MercadoPago
             _service = service;
         }
 
-        public async Task<CreatePaymentCommandResponse> CreatePaymentRequest(CreatePaymentCommandRequest request)
+        public async Task<PaymentResponse> CreatePaymentRequest(PaymentRequest request, CancellationToken cancellationToken = default(CancellationToken))
         {
             var body = new PreferenceRequest();
-            body.Items = new List<Models.Item>();
+            body.Items = new List<Item>();
 
-            Models.Item item1 = new Models.Item
+            Item item1 = new Item
             {
                 Id = "2334234",
                 Description = request.Order.Description,
@@ -58,17 +61,16 @@ namespace FuraFila.Payments.MercadoPago
             };
 
             body.AutoReturn = AutoReturn.ALL;
-            //?collection_id=17726033&collection_status=approved&preference_id=194008091-c7230847-f816-4af0-bb27-51d875049520&external_reference=null&payment_type=credit_card&merchant_order_id=963854120
 
             var rs = await _service.SendRequest(body, _options.AccessToken);
 
-            return new CreatePaymentCommandResponse
+            return new PaymentResponse
             {
-                PaymentRequest = new Domain.Models.PaymentRequest
+                RequestRedirect = new Domain.Models.PaymentRequestRedirect
                 {
                     Amount = request.Order.Value,
                     Id = rs.Id,
-                    RedirectUri = this.GetRedirectUrl(rs.InitPoint, rs.SandboxInitPoint, _options)
+                    RedirectUri = this.GetMPRedirectUrl(rs.InitPoint, rs.SandboxInitPoint, _options)
                 }
             };
         }
