@@ -20,5 +20,8 @@ namespace FuraFila.WebApp.Areas.Identity.Models
         public string Name { get; set; }
 
         public string SurName { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime DateOfBirth { get; set; }
     }
 }

@@ -13,6 +13,7 @@ using FuraFila.Domain.Models;
 using Microsoft.AspNetCore.Identity.UI;
 using System;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using FuraFila.Identity;
 
 namespace FuraFila.WebApp
 {
@@ -49,6 +50,8 @@ namespace FuraFila.WebApp
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddDefaultTokenProviders();
+
+            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, AppClaimsPrincipalFactory>();
 
             services.Configure<IdentityOptions>(opts =>
             {

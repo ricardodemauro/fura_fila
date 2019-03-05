@@ -12,5 +12,11 @@ namespace FuraFila.Domain.Models
         public string SurName { get; set; }
 
         public string Email { get; set; }
+
+        public DateTime? DateOfBirth { get; set; }
+
+        public string AreaCode { get; set; }
+
+        public string Phone { get; set; }
     }
 }

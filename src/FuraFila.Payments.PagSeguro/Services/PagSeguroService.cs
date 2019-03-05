@@ -79,13 +79,9 @@ namespace FuraFila.Payments.PagSeguro.Services
         /// <returns>XML representing this instance.</returns>
         public T FromXml<T>(Stream stream)
         {
-            DataContractSerializer serializer = new DataContractSerializer(typeof(T));
-
-            using (XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas()))
-            {
-                return (T)serializer.ReadObject(reader);
-
-            }
+            var xmlSettings = new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true, Encoding = Encoding.UTF8 };
+            T output = ExtendedXmlSerializers.Checkout.Deserialize<T>(stream);
+            return output;
         }
 
         /// <summary>
@@ -94,11 +90,9 @@ namespace FuraFila.Payments.PagSeguro.Services
         /// <returns>XML representing this instance.</returns>
         public T FromXml<T>(string content)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-            using (StringReader reader = new StringReader(content))
-            {
-                return (T)serializer.Deserialize(reader);
-            }
+            var xmlSettings = new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true, Encoding = Encoding.UTF8 };
+            T output = ExtendedXmlSerializers.Checkout.Deserialize<T>(content);
+            return output;
         }
     }
 }
