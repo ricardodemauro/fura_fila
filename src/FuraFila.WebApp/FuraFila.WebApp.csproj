@@ -29,4 +29,10 @@
     <Folder Include="wwwroot\images\payments\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="core.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
