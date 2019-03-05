@@ -12,7 +12,7 @@ namespace FuraFila.Payments.PagSeguro.Models
     public class Shipping
     {
         [DataMember]
-        public Address address { get; set; }
+        public Address Address { get; set; }
 
         [DataMember]
         public ShippingType Type { get; set; }

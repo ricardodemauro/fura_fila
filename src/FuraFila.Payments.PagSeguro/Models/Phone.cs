@@ -11,9 +11,15 @@ namespace FuraFila.Payments.PagSeguro.Models
     [DataContract]
     public class Phone
     {
+        /// <summary>
+        /// código de área (DDD)
+        /// </summary>
         [DataMember]
         public string AreaCode { get; set; }
 
+        /// <summary>
+        /// número do telefone 
+        /// </summary>
         [DataMember]
         public string Number { get; set; }
     }

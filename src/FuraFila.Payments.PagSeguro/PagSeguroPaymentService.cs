@@ -23,45 +23,46 @@ namespace FuraFila.Payments.PagSeguro
 
         public async Task<PaymentResponse> CreatePaymentRequest(PaymentRequest request, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var body = new CheckoutRequest();
-
-            body.Sender = new Sender
+            var body = new CheckoutRequest
             {
-                Name = request.Customer.Name,
-                Email = request.Customer.Email
-            };
-
-            body.Currency = Constants.CURRENCY_BRL;
-
-            body.Items = new Item[]
-            {
-                new Item
+                Sender = new Sender
                 {
-                    Amount = 1,
-                    Description = request.Order.Description,
-                    Id = 1234,
-                    Quantity = 1,
-                    ShippingCost = 0,
-                    Weight = 0
-                }
+                    Name = request.Customer.Name,
+                    Email = request.Customer.Email
+                },
+
+                Currency = Constants.CURRENCY_BRL,
+
+                Items = new Item[]
+                {
+                    new Item
+                    {
+                        Id = "1234",
+                        Description = request.Order.Description,
+                        Amount = request.Order.Value,
+                        Quantity = 1,
+                        ShippingCost = 0M,
+                        Weight = 0
+                    }
+                },
+
+                RedirectURL = _options.CallbackUrl,
+
+                ExtraAmount = 0M,
+                Reference = "" + request.Order.Id,
+
+                Shipping = null,
+
+                Timeout = 25,
+                MaxAge = int.MaxValue,
+                MaxUses = 5,
+                Receiver = new Receiver
+                {
+                    Email = request.Customer.Email
+                },
+
+                EnableRecover = false
             };
-
-            body.RedirectURL = _options.CallbackUrl;
-
-            body.ExtraAmount = 0;
-            body.Reference = "" + request.Order.Id;
-
-            body.Shipping = null;
-
-            body.Timeout = 25;
-            body.MaxAge = int.MaxValue;
-            body.MaxUses = 5;
-            body.Receiver = new Receiver
-            {
-                Email = request.Customer.Email
-            };
-
-            body.EnableRecover = false;
 
             var rs = await _service.Checkout(body, _options.AccessToken, _options.Email, cancellationToken);
 

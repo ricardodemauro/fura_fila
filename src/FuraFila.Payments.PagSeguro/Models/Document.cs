@@ -11,9 +11,15 @@ namespace FuraFila.Payments.PagSeguro.Models
     [DataContract]
     public class Document
     {
+        /// <summary>
+        /// tipo de documento do comprador que está realizando o pagamento
+        /// </summary>
         [DataMember]
         public string Type { get; set; }
 
+        /// <summary>
+        /// número do documento
+        /// </summary>
         [DataMember]
         public string Value { get; set; }
     }

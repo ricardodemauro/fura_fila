@@ -56,3 +56,8 @@ CVV
 # Pagseguro comprador sandbox
 
 xxxxxxx@sandbox.pagseguro.com.br.
+
+
+# Xml serialization we are using extendedxmlserializer
+
+https://github.com/wojtpl2/ExtendedXmlSerializer

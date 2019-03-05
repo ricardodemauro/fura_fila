@@ -76,13 +76,17 @@ namespace FuraFila.Payments.PagSeguro.Infrastructure
         {
             // Don't process empty strings.
             if (name.Length == 0) return name;
+
             // If the first is already upper, don't process.
-            if (Char.IsUpper(name[0])) return name;
+            if (char.IsUpper(name[0])) return name;
+
             // If there's just one char, make it lower directly.
             if (name.Length == 1) return name.ToUpper(System.Globalization.CultureInfo.CurrentCulture);
+
             // Finally, modify and create a string. 
-            Char[] letters = name.ToCharArray();
-            letters[0] = Char.ToUpper(letters[0], System.Globalization.CultureInfo.CurrentUICulture);
+            char[] letters = name.ToCharArray();
+            letters[0] = char.ToUpper(letters[0], System.Globalization.CultureInfo.CurrentUICulture);
+
             return NameTable.Add(new string(letters));
         }
 

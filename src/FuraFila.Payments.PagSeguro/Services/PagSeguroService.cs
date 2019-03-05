@@ -1,4 +1,7 @@
-﻿using FuraFila.Payments.PagSeguro.Infrastructure;
+﻿using ExtendedXmlSerializer.Configuration;
+using ExtendedXmlSerializer.ExtensionModel.Xml;
+using FuraFila.Payments.PagSeguro.Infrastructure;
+using FuraFila.Payments.PagSeguro.Infrastructure.ExXmlSettings;
 using FuraFila.Payments.PagSeguro.Models;
 using System;
 using System.Collections.Generic;
@@ -32,7 +35,8 @@ namespace FuraFila.Payments.PagSeguro.Services
 
         internal async Task<TResult> SendRequest<TRequest, TResult>(TRequest data, string path, string accessToken, string email, CancellationToken cancellationToken = default(CancellationToken))
         {
-            StringContent content = new StringContent(ToXml(data));
+            string xmlContent = ToXml(data);
+            StringContent content = new StringContent(xmlContent);
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
 
@@ -47,7 +51,8 @@ namespace FuraFila.Payments.PagSeguro.Services
                 {
                     response.EnsureSuccessStatusCode();
 
-                    return FromXml<TResult>(await response.Content.ReadAsStringAsync());
+                    string xmlResult = await response.Content.ReadAsStringAsync();
+                    return FromXml<TResult>(xmlResult);
                 }
             }
         }
@@ -63,25 +68,9 @@ namespace FuraFila.Payments.PagSeguro.Services
         /// <returns>XML representing this instance.</returns>
         public string ToXml<T>(T data)
         {
-            var emptyNamespaces = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
-
-            var xmlSerializer = new XmlSerializer(typeof(T));
-
-            var sb = new StringBuilder();
-            using (var stream = new StringWriter(sb, CultureInfo.InvariantCulture))
-            using (var writer = new XmlFirstLowerWriter(stream))
-            {
-                xmlSerializer.Serialize(writer, data, emptyNamespaces);
-            }
-            return sb.ToString();
-
-            //var serializer = new DataContractSerializer(typeof(T));
-            //using (var output = new StringWriter())
-            //using (var writer = new XmlTextWriter(output) { Formatting = Formatting.Indented })
-            //{
-            //    serializer.WriteObject(writer, this);
-            //    return output.GetStringBuilder().ToString();
-            //}
+            var xmlSettings = new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true, Encoding = Encoding.UTF8 };
+            string output = ExtendedXmlSerializers.Checkout.Serialize(xmlSettings, data);
+            return output;
         }
 
         /// <summary>

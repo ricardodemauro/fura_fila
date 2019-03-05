@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace FuraFila.Payments.PagSeguro.Infrastructure
@@ -21,8 +23,9 @@ namespace FuraFila.Payments.PagSeguro.Infrastructure
         /// <summary>
         /// See <see cref="XmlTextWriter"/> ctors.
         /// </summary>
-        public XmlFirstLowerWriter(TextWriter w) : base(w)
+        public XmlFirstLowerWriter(TextWriter w, Encoding encoding) : base(w)
         {
+            _settings.Encoding = encoding;
         }
 
         /// <summary>
@@ -30,6 +33,7 @@ namespace FuraFila.Payments.PagSeguro.Infrastructure
         /// </summary>
         public XmlFirstLowerWriter(Stream w, Encoding encoding) : base(w, encoding)
         {
+            _settings.Encoding = encoding;
         }
 
         /// <summary>
@@ -37,6 +41,7 @@ namespace FuraFila.Payments.PagSeguro.Infrastructure
         /// </summary>
         public XmlFirstLowerWriter(string filename, Encoding encoding) : base(filename, encoding)
         {
+            _settings.Encoding = encoding;
         }
 
         #endregion Fields & Ctor
@@ -47,21 +52,25 @@ namespace FuraFila.Payments.PagSeguro.Infrastructure
         {
             Indent = true,
             OmitXmlDeclaration = true,
-            Encoding = Encoding.UTF8
+            Encoding = Encoding.UTF8,
         };
+
         public override XmlWriterSettings Settings => _settings;
 
         internal static string MakeFirstLower(string name)
         {
             // Don't process empty strings.
             if (name.Length == 0) return name;
+
             // If the first is already lower, don't process.
-            if (Char.IsLower(name[0])) return name;
+            if (char.IsLower(name[0])) return name;
+
             // If there's just one char, make it lower directly.
             if (name.Length == 1) return name.ToLower(System.Globalization.CultureInfo.CurrentCulture);
+
             // Finally, modify and create a string. 
-            Char[] letters = name.ToCharArray();
-            letters[0] = Char.ToLower(letters[0], System.Globalization.CultureInfo.CurrentCulture);
+            char[] letters = name.ToCharArray();
+            letters[0] = char.ToLower(letters[0], System.Globalization.CultureInfo.CurrentCulture);
             return new string(letters);
         }
 
@@ -93,6 +102,55 @@ namespace FuraFila.Payments.PagSeguro.Infrastructure
         {
             base.WriteStartElement(prefix, MakeFirstLower(localName), ns);
         }
+
+        public override void WriteStartDocument()
+        {
+            //base.WriteStartDocument();
+        }
+
+        public override void WriteStartDocument(bool standalone)
+        {
+            //base.WriteStartDocument(standalone);
+        }
+
+        public override Task WriteStartDocumentAsync(bool standalone)
+        {
+            return Task.CompletedTask;
+            //return base.WriteStartDocumentAsync(standalone);
+        }
+
+        public override Task WriteStartDocumentAsync()
+        {
+            return Task.CompletedTask;
+            //return base.WriteStartDocumentAsync();
+        }
+
+        public override void WriteString(string text)
+        {
+            base.WriteString(text);
+        }
+
+        public override void WriteValue(object value)
+        {
+            base.WriteValue(value);
+        }
+
+        public override void WriteValue(string value)
+        {
+            base.WriteValue(value);
+        }
+
+        public override void WriteValue(decimal value)
+        {
+            string decValue = value.ToString("N", CultureInfo.InvariantCulture);
+            this.WriteString(decValue);
+        }
+
+        public override void WriteValue(float value)
+        {
+            base.WriteValue(value);
+        }
+
 
         #endregion Methods
     }

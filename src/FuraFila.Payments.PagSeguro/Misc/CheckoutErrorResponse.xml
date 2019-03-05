@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1"?>  
+<errors>  
+    <error>  
+        <code>11004</code>  
+        <message>Currency is required.</message>  
+    </error>  
+    <error>  
+        <code>11005</code>  
+        <message>Currency invalid value: 100</message>  
+    </error>  
+</errors>  
