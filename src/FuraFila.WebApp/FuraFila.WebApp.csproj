@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="Application\Validators\" />
+    <Folder Include="wwwroot\images\payments\" />
   </ItemGroup>
 
 </Project>
