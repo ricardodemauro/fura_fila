@@ -1,13 +1,9 @@
 ﻿using FuraFila.Domain.Commands;
-using FuraFila.Domain.Payments;
+using FuraFila.Domain.Payments.Models;
 using FuraFila.Payments.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using FuraFila.Domain.Infrastructure.Extensions;
-using FuraFila.Domain.Payments.Models;
+using FuraFila.Identity;
 
 namespace FuraFila.WebApp.Application
 {
@@ -32,7 +28,9 @@ namespace FuraFila.WebApp.Application
             {
                 Email = request.User.GetEmail(),
                 Name = request.User.GetName(),
-                SurName = request.User.GetSurName()
+                SurName = request.User.GetSurname(),
+                DateOfBirth = request.User.GetDateOfBirth(),
+                Phone = request.User.GetPhone()
             };
             var order = new Domain.Models.Order
             {

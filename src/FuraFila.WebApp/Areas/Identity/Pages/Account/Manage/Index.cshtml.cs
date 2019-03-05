@@ -52,7 +52,9 @@ namespace FuraFila.WebApp.Areas.Identity.Pages.Account.Manage
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 Name = user.Name,
-                SurName = user.SurName
+                SurName = user.SurName,
+                AreaCode = user.PhoneNumber,
+                DateOfBirth = user.DateOfBirth
             };
 
             IsEmailConfirmed = user.EmailConfirmed;
@@ -96,8 +98,17 @@ namespace FuraFila.WebApp.Areas.Identity.Pages.Account.Manage
             user.PhoneNumber = Input.PhoneNumber;
             user.SurName = Input.SurName;
             user.Name = Input.Name;
+            user.DateOfBirth = Input.DateOfBirth;
 
-            await _userManager.UpdateAsync(user);
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("Generic", error.Description);
+                }
+                return Page();
+            }
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

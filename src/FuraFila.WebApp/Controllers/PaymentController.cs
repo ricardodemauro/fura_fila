@@ -3,9 +3,6 @@ using FuraFila.WebApp.Application;
 using FuraFila.WebApp.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FuraFila.WebApp.Controllers

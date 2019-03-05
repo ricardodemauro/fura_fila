@@ -54,6 +54,6 @@ namespace FuraFila.Payments.PagSeguro.Models
         /// </summary>
         [DataMember]
         /// <remarks/>
-        public decimal ShippingCost { get; set; }
+        public decimal? ShippingCost { get; set; }
     }
 }

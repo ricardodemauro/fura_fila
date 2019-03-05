@@ -18,7 +18,7 @@ namespace FuraFila.Payments.PagSeguro.Infrastructure.ExXmlSettings
 
         public static DecimalConverter Default { get; } = new DecimalConverter();
 
-        public DecimalConverter() { }
+        private DecimalConverter() { }
 
         public string Format(decimal instance)
         {

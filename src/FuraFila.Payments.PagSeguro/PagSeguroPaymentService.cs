@@ -39,9 +39,14 @@ namespace FuraFila.Payments.PagSeguro
                     Description = request.Order.Description,
                     Amount = request.Order.Value,
                     Quantity = 1,
-                    ShippingCost = 0M,
+                    ShippingCost = null,
                     Weight = 0
                 }
+            };
+            bodyCheckout.Shipping = new Shipping
+            {
+                AddressRequired = false,
+                Type = ShippingType.NaoEspecificado
             };
 
             bodyCheckout.Reference = "" + request.Order.Id;

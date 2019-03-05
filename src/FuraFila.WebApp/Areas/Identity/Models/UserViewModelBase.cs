@@ -13,6 +13,10 @@ namespace FuraFila.WebApp.Areas.Identity.Models
         [EmailAddress]
         public string Email { get; set; }
 
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Area code")]
+        public string AreaCode { get; set; }
+
         [Phone]
         [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
@@ -22,6 +26,6 @@ namespace FuraFila.WebApp.Areas.Identity.Models
         public string SurName { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
     }
 }

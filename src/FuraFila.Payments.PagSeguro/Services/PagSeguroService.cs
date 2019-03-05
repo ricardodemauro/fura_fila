@@ -49,7 +49,8 @@ namespace FuraFila.Payments.PagSeguro.Services
 
                 using (var response = await _client.SendAsync(request, cancellationToken))
                 {
-                    response.EnsureSuccessStatusCode();
+                    //TODO - do we need this... i am guessing not for now
+                    //response.EnsureSuccessStatusCode();
 
                     string xmlResult = await response.Content.ReadAsStringAsync();
                     return FromXml<TResult>(xmlResult);
@@ -69,7 +70,7 @@ namespace FuraFila.Payments.PagSeguro.Services
         public string ToXml<T>(T data)
         {
             var xmlSettings = new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true, Encoding = Encoding.UTF8 };
-            string output = ExtendedXmlSerializers.Checkout.Serialize(xmlSettings, data);
+            string output = ExtendedXmlSerializers.CheckoutRQ.Serialize(xmlSettings, data);
             return output;
         }
 
@@ -80,7 +81,7 @@ namespace FuraFila.Payments.PagSeguro.Services
         public T FromXml<T>(Stream stream)
         {
             var xmlSettings = new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true, Encoding = Encoding.UTF8 };
-            T output = ExtendedXmlSerializers.Checkout.Deserialize<T>(stream);
+            T output = ExtendedXmlSerializers.CheckoutRS.Deserialize<T>(stream);
             return output;
         }
 
@@ -91,7 +92,7 @@ namespace FuraFila.Payments.PagSeguro.Services
         public T FromXml<T>(string content)
         {
             var xmlSettings = new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true, Encoding = Encoding.UTF8 };
-            T output = ExtendedXmlSerializers.Checkout.Deserialize<T>(content);
+            T output = ExtendedXmlSerializers.CheckoutRS.Deserialize<T>(content);
             return output;
         }
     }

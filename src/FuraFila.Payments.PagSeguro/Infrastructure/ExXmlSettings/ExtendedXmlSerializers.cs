@@ -12,9 +12,10 @@ namespace FuraFila.Payments.PagSeguro.Infrastructure.ExXmlSettings
 {
     public static class ExtendedXmlSerializers
     {
-        internal static readonly IExtendedXmlSerializer Checkout = new ConfigurationContainer()
+        internal static readonly IExtendedXmlSerializer CheckoutRQ = new ConfigurationContainer()
             .Register(DecimalConverter.Default)
-            .EnableImplicitTyping(typeof(CheckoutRequest))
+            .Register(DateTimeConverter.Default)
+            .EnableImplicitTyping(new Type[] { typeof(CheckoutRequest), typeof(Item), typeof(Document), typeof(Address) })
             .Type<Error>()
                 .Member(m => m.Code).Name("code")
                 .Member(m => m.Message).Name("message")
@@ -70,6 +71,21 @@ namespace FuraFila.Payments.PagSeguro.Infrastructure.ExXmlSettings
                 .Member(m => m.Type).Name("type")
             .ConfigureType<CheckoutRequest>()
                 .Name("checkout")
+            .ConfigureType<CheckoutResult>()
+                .Name("checkout")
+                .Member(m => m.Errors).Name("errors")
+                .Member(m => m.Date).Name("date")
+                .Member(m => m.Code).Name("code")
+
+            .Create();
+
+        internal static readonly IExtendedXmlSerializer CheckoutRS = new ConfigurationContainer()
+            .Register(DecimalConverter.Default)
+            .Register(DateTimeConverter.Default)
+            .EnableImplicitTyping(new Type[] { typeof(CheckoutResult), typeof(Error) })
+            .Type<Error>()
+                .Member(m => m.Code).Name("code")
+                .Member(m => m.Message).Name("message")
             .ConfigureType<CheckoutResult>()
                 .Name("checkout")
                 .Member(m => m.Errors).Name("errors")

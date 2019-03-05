@@ -28,18 +28,31 @@ namespace FuraFila.Identity
 
             var identity = (ClaimsIdentity)principal.Identity;
 
-            var clName = new Claim(type: ClaimTypes.GivenName, value: user.Name);
-            var clSurName = new Claim(type: ClaimTypes.Surname, value: user.SurName);
-            var clEmail = new Claim(type: ClaimTypes.Email, value: user.Email);
-            var clDateBirth = new Claim(type: ClaimTypes.DateOfBirth, value: user.DateOfBirth?.ToString("yyyy-MM-ddTHH:mm:ssZ"));
-            identity.AddClaims(new[]
+            if (!string.IsNullOrEmpty(user.Name))
             {
-                clName,
-                clSurName,
-                clEmail,
-                clDateBirth
-            });
-
+                var clName = new Claim(type: ClaimTypes.GivenName, value: user.Name);
+                identity.AddClaims(new[] { clName });
+            }
+            if (!string.IsNullOrEmpty(user.SurName))
+            {
+                var clSurName = new Claim(type: ClaimTypes.Surname, value: user.SurName);
+                identity.AddClaims(new[] { clSurName });
+            }
+            if (!string.IsNullOrEmpty(user.Email))
+            {
+                var clEmail = new Claim(type: ClaimTypes.Email, value: user.Email);
+                identity.AddClaims(new[] { clEmail });
+            }
+            if (!string.IsNullOrEmpty(user.PhoneNumber))
+            {
+                var clPhone = new Claim(type: ClaimTypes.MobilePhone, value: user.PhoneNumber);
+                identity.AddClaims(new[] { clPhone });
+            }
+            if (user.DateOfBirth.HasValue)
+            {
+                var clDateBirth = user.DateOfBirth.Value.ToClaimsFormat(ClaimTypes.DateOfBirth);
+                identity.AddClaims(new[] { clDateBirth });
+            }
             return principal;
         }
     }
