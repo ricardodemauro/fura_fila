@@ -33,6 +33,8 @@ Still missing env variables... WIP
 
 `docker push registry.heroku.com/rick-furafila/web`
 
+`heroku container:login`
+
 `heroku container:release web -a rick-furafila`
 
 # Pagseguro references

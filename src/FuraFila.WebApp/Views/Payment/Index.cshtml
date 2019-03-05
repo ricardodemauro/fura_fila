@@ -7,10 +7,8 @@
 
 <section>
     <p>select your payment method</p>
-    <ul>
-        <li>@Html.ActionLink("Mercado Pago", "mercadopago", "payment", new { publicOrderId = "1234" })</li>
-        @*<li><a asp-action="mercadopago" asp-controller="payment" asp-all-route-data="">Mercado Pago</a></li>*@
-        <li>@Html.ActionLink("PagSeguro", "pagseguro", "payment", new { publicOrderId = "1234" })</li>
-        @*<li><a asp-action="pagseguro" asp-controller="payment">PagSeguro</a></li>*@
+    <ul class="list-inline">
+        <li class="list-inline-item">@Html.ActionLink("Mercado Pago", "mercadopago", "payment", new { publicOrderId = "1234" }, new { @class = "btn btn-mercardo-pago" })</li>
+        <li class="list-inline-item">@Html.ActionLink("PagSeguro", "pagseguro", "payment", new { publicOrderId = "1234" }, new { @class = "btn btn-pagseguro" })</li>
     </ul>
 </section>
