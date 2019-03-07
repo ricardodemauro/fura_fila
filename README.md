@@ -31,11 +31,17 @@ Still missing env variables... WIP
 
 `docker tag rick/furafila:heroku registry.heroku.com/rick-furafila/web`
 
-`docker push registry.heroku.com/rick-furafila/web`
+if you are not logged in
 
 `heroku container:login`
 
+`docker push registry.heroku.com/rick-furafila/web`
+
 `heroku container:release web -a rick-furafila`
+
+# running with ssl
+
+`docker run -p 5000:5000 -p 443:443 -d -e PORT=5000 -e ASPNETCORE_Kestrel__Certificates__Default__Password=test.123 -e ASPNETCORE_Kestrel__Certificates__Default__Path=dev_cert.pfx rick/furafila:heroku`
 
 # Pagseguro references
 
