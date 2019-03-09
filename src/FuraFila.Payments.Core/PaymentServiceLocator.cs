@@ -30,7 +30,7 @@ namespace FuraFila.Payments.Core
                     case PaymentBrokers.PagSeguro:
                         return _svcProvider.GetService(typeof(PagSeguroPaymentService)) as IPaymentService;
                     default:
-                        throw new NotImplementedException();
+                        throw new ArgumentOutOfRangeException(nameof(broker));
                 }
             }
         }

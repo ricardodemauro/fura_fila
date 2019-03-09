@@ -20,13 +20,8 @@ namespace FuraFila.Repository.SQlite.Seeds
             {
                 dbContext.Sellers.Add(new Seller
                 {
-                    Active = true,
+                    IsActive = true,
                     Name = "Seller sample",
-                });
-
-                dbContext.Customers.Add(new Customer
-                {
-                    Name = "Customer sample"
                 });
 
                 dbContext.SaveChanges();

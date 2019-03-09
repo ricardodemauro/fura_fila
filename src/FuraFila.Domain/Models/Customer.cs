@@ -1,11 +1,12 @@
 ﻿using FuraFila.Domain.Infrastructure;
+using FuraFila.Domain.Infrastructure.Entities;
 using System;
 
 namespace FuraFila.Domain.Models
 {
-    public class Customer : IEntity
+    public class Customer : IEntity<string>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string Name { get; set; }
 

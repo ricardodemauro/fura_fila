@@ -39,21 +39,21 @@ namespace FuraFila.Payments.MercadoPago
                 Id = "2334234",
                 Description = request.Order.Description,
                 Title = request.Order.Description,
-                UnitPrice = request.Order.Value,
+                UnitPrice = request.Order.UnitPrice,
                 Quantity = 1,
                 CurrencyId = Constants.CURRENCY
             };
 
             body.Items.Add(item1);
 
-            body.Payer = new Models.Payer
+            body.Payer = new Payer
             {
                 Email = request.Customer.Email,
                 Name = request.Customer.Name,
                 Surname = request.Customer.SurName
             };
 
-            body.BackUrls = new Models.BackUrls
+            body.BackUrls = new BackUrls
             {
                 Failure = _options.CallbackUrl,
                 Pending = _options.CallbackUrl,
@@ -68,7 +68,7 @@ namespace FuraFila.Payments.MercadoPago
             {
                 RequestRedirect = new Domain.Models.PaymentRequestRedirect
                 {
-                    Amount = request.Order.Value,
+                    Amount = request.Order.UnitPrice,
                     Id = rs.Id,
                     RedirectUri = this.GetMPRedirectUrl(rs.InitPoint, rs.SandboxInitPoint, _options)
                 }

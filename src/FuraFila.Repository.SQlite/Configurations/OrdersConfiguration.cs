@@ -24,8 +24,11 @@ namespace FuraFila.Repository.SQlite.Configurations
             builder.Property(x => x.Created)
                 .IsRequired();
 
-            builder.Property(x => x.Value)
-                .IsRequired();
+            builder.Property(x => x.CreatedBy);
+
+            builder.Property(x => x.UnitPrice);
+
+            builder.Property(x => x.Description);
         }
     }
 }

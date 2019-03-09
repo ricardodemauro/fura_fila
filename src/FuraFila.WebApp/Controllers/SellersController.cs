@@ -27,7 +27,7 @@ namespace FuraFila.WebApp.Controllers
         }
 
         // GET: Sellers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -67,7 +67,7 @@ namespace FuraFila.WebApp.Controllers
         }
 
         // GET: Sellers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -87,7 +87,7 @@ namespace FuraFila.WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Active")] Seller seller)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Active")] Seller seller)
         {
             if (id != seller.Id)
             {
@@ -118,7 +118,7 @@ namespace FuraFila.WebApp.Controllers
         }
 
         // GET: Sellers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -146,7 +146,7 @@ namespace FuraFila.WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SellerExists(int id)
+        private bool SellerExists(string id)
         {
             return _context.Sellers.Any(e => e.Id == id);
         }

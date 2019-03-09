@@ -16,17 +16,15 @@ namespace FuraFila.Repository.SQlite
 
         public DbSet<Seller> Sellers { get; set; }
 
-        public AppDbContext(DbContextOptions options) : base(options)
+        public DbSet<OrderItem> OrderItems { get; set; }
+
+        AppDbContext()
         {
+            Database.EnsureCreated();
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public AppDbContext(DbContextOptions options) : base(options)
         {
-            if(!optionsBuilder.IsConfigured)
-            {
-
-            }
-            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -34,12 +32,19 @@ namespace FuraFila.Repository.SQlite
             modelBuilder.ApplyConfiguration(new CustomersConfiguration());
             modelBuilder.ApplyConfiguration(new OrdersConfiguration());
             modelBuilder.ApplyConfiguration(new SellersConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderItemsConfiguration());
 
             //relations
             modelBuilder.Entity<Seller>()
                 .HasMany(x => x.Orders)
                 .WithOne(x => x.Seller)
                 .HasForeignKey(x => x.SellerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Order>()
+                .HasMany(x => x.Items)
+                .WithOne(x => x.Order)
+                .HasForeignKey(x => x.OrderId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);

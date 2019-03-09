@@ -8,24 +8,24 @@ using System.Threading.Tasks;
 
 namespace FuraFila.Domain.Models
 {
-    public class Order : IEntity<string>, IEntityCreated, IEntityCreatedBy
+    public class OrderItem : IEntity
     {
-        public string Id { get; set; }
-
-        public decimal UnitPrice { get; set; }
+        public int Id { get; set; }
 
         public string Description { get; set; }
 
-        public bool Paid { get; set; }
+        public decimal UnitPrice { get; set; }
+
+        public string PictureUrl { get; set; }
+
+        public int Quantity { get; set; }
 
         public DateTime Created { get; set; }
 
         public string CreatedBy { get; set; }
 
-        public string SellerId { get; set; }
+        public string OrderId { get; set; }
 
-        public Seller Seller { get; set; }
-
-        public List<OrderItem> Items { get; set; }
+        public Order Order { get; set; }
     }
 }

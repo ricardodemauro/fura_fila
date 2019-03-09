@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FuraFila.Payments.Core
+namespace FuraFila.Domain.Infrastructure.Entities
 {
-    public enum PaymentMethods
+    public interface IEntityCreatedBy
     {
-        Mastercard,
-        Visa
+        string CreatedBy { get; set; }
     }
 }

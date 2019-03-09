@@ -36,7 +36,7 @@ namespace FuraFila.WebApp.Application
             {
                 Description = "rango",
                 Paid = false,
-                Value = 10.4m
+                UnitPrice = 10.4m
             };
 
             var svc = _locator[request.Broker.Value];
