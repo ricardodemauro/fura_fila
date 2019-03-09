@@ -74,7 +74,7 @@ namespace FuraFila.Repository.SQlite.Migrations
 
             modelBuilder.Entity("FuraFila.Domain.Models.Customer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("AreaCode");
@@ -98,18 +98,26 @@ namespace FuraFila.Repository.SQlite.Migrations
 
             modelBuilder.Entity("FuraFila.Domain.Models.Order", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("Created");
 
+                    b.Property<string>("CreatedBy");
+
                     b.Property<string>("Description");
 
-                    b.Property<bool>("Paid");
+                    b.Property<string>("ExternalId");
 
-                    b.Property<int>("SellerId");
+                    b.Property<bool>("IsActive");
 
-                    b.Property<decimal>("Value");
+                    b.Property<bool>("IsPaid");
+
+                    b.Property<string>("SellerId");
+
+                    b.Property<string>("TableId");
+
+                    b.Property<decimal>("UnitPrice");
 
                     b.HasKey("Id");
 
@@ -118,12 +126,45 @@ namespace FuraFila.Repository.SQlite.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("FuraFila.Domain.Models.Seller", b =>
+            modelBuilder.Entity("FuraFila.Domain.Models.OrderItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("Active");
+                    b.Property<DateTime>("Created");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired();
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("OrderId");
+
+                    b.Property<string>("PictureUrl")
+                        .HasMaxLength(500);
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<decimal>("UnitPrice");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("FuraFila.Domain.Models.Seller", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<string>("CreatedBy");
+
+                    b.Property<bool>("IsActive");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -246,6 +287,14 @@ namespace FuraFila.Repository.SQlite.Migrations
                     b.HasOne("FuraFila.Domain.Models.Seller", "Seller")
                         .WithMany("Orders")
                         .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("FuraFila.Domain.Models.OrderItem", b =>
+                {
+                    b.HasOne("FuraFila.Domain.Models.Order", "Order")
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

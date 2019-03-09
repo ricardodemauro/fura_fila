@@ -37,7 +37,7 @@ namespace FuraFila.Payments.PagSeguro
                 {
                     Id = "1234",
                     Description = request.Order.Description,
-                    Amount = request.Order.Value,
+                    Amount = request.Order.UnitPrice,
                     Quantity = 1,
                     ShippingCost = null,
                     Weight = 0
@@ -57,7 +57,7 @@ namespace FuraFila.Payments.PagSeguro
             {
                 RequestRedirect = new Domain.Models.PaymentRequestRedirect
                 {
-                    Amount = request.Order.Value,
+                    Amount = request.Order.UnitPrice,
                     Id = rs.Code,
                     RedirectUri = this.GetPagSeguroPaymentUrl(rs.Code, _options)
                 }

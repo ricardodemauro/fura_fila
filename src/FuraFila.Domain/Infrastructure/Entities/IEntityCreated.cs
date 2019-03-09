@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FuraFila.Domain.Infrastructure
+namespace FuraFila.Domain.Infrastructure.Entities
 {
-    public interface IEntity
+    public interface IEntityCreated
     {
-        int Id { get; set; }
+        DateTime Created { get; set; }
     }
 }

@@ -35,8 +35,8 @@ namespace FuraFila.WebApp.Application
             var order = new Domain.Models.Order
             {
                 Description = "rango",
-                Paid = false,
-                Value = 10.4m
+                IsPaid = false,
+                UnitPrice = 10.4m
             };
 
             var svc = _locator[request.Broker.Value];

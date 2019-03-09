@@ -5,91 +5,95 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using FuraFila.Domain;
-using FuraFila.Repository.SQlite;
 using FuraFila.Domain.Models;
+using FuraFila.Repository.SQlite;
 
 namespace FuraFila.WebApp.Controllers
 {
-    public class SellersController : Controller
+    public class OrderItemsController : Controller
     {
         private readonly AppDbContext _context;
 
-        public SellersController(AppDbContext context)
+        public OrderItemsController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: Sellers
+        // GET: OrderItems
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Sellers.ToListAsync());
+            var appDbContext = _context.OrderItems.Include(o => o.Order);
+            return View(await appDbContext.ToListAsync());
         }
 
-        // GET: Sellers/Details/5
-        public async Task<IActionResult> Details(string id)
+        // GET: OrderItems/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var seller = await _context.Sellers
+            var orderItem = await _context.OrderItems
+                .Include(o => o.Order)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (seller == null)
+            if (orderItem == null)
             {
                 return NotFound();
             }
 
-            return View(seller);
+            return View(orderItem);
         }
 
-        // GET: Sellers/Create
+        // GET: OrderItems/Create
         public IActionResult Create()
         {
+            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id");
             return View();
         }
 
-        // POST: Sellers/Create
+        // POST: OrderItems/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Active")] Seller seller)
+        public async Task<IActionResult> Create([Bind("Id,Description,UnitPrice,PictureUrl,Quantity,Created,CreatedBy,OrderId")] OrderItem orderItem)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(seller);
+                _context.Add(orderItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(seller);
+            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", orderItem.OrderId);
+            return View(orderItem);
         }
 
-        // GET: Sellers/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        // GET: OrderItems/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var seller = await _context.Sellers.FindAsync(id);
-            if (seller == null)
+            var orderItem = await _context.OrderItems.FindAsync(id);
+            if (orderItem == null)
             {
                 return NotFound();
             }
-            return View(seller);
+            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", orderItem.OrderId);
+            return View(orderItem);
         }
 
-        // POST: Sellers/Edit/5
+        // POST: OrderItems/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Active")] Seller seller)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,UnitPrice,PictureUrl,Quantity,Created,CreatedBy,OrderId")] OrderItem orderItem)
         {
-            if (id != seller.Id)
+            if (id != orderItem.Id)
             {
                 return NotFound();
             }
@@ -98,12 +102,12 @@ namespace FuraFila.WebApp.Controllers
             {
                 try
                 {
-                    _context.Update(seller);
+                    _context.Update(orderItem);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SellerExists(seller.Id))
+                    if (!OrderItemExists(orderItem.Id))
                     {
                         return NotFound();
                     }
@@ -114,41 +118,43 @@ namespace FuraFila.WebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(seller);
+            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", orderItem.OrderId);
+            return View(orderItem);
         }
 
-        // GET: Sellers/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        // GET: OrderItems/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var seller = await _context.Sellers
+            var orderItem = await _context.OrderItems
+                .Include(o => o.Order)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (seller == null)
+            if (orderItem == null)
             {
                 return NotFound();
             }
 
-            return View(seller);
+            return View(orderItem);
         }
 
-        // POST: Sellers/Delete/5
+        // POST: OrderItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var seller = await _context.Sellers.FindAsync(id);
-            _context.Sellers.Remove(seller);
+            var orderItem = await _context.OrderItems.FindAsync(id);
+            _context.OrderItems.Remove(orderItem);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SellerExists(string id)
+        private bool OrderItemExists(int id)
         {
-            return _context.Sellers.Any(e => e.Id == id);
+            return _context.OrderItems.Any(e => e.Id == id);
         }
     }
 }
