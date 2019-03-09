@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FuraFila.Domain.Models;
 using FuraFila.Repository.SQlite;
+using FuraFila.WebApp.Infrastructure.Extensions;
 
 namespace FuraFila.WebApp.Controllers
 {
@@ -48,7 +49,7 @@ namespace FuraFila.WebApp.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
-            ViewData["SellerId"] = new SelectList(_context.Sellers, "Id", "Id");
+            BuildView();
             return View();
         }
 
@@ -57,15 +58,18 @@ namespace FuraFila.WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UnitPrice,Description,Paid,Created,CreatedBy,SellerId")] Order order)
+        public async Task<IActionResult> Create([Bind("Id,UnitPrice,Description,TableId,ExternalId,IsPaid,IsActive,SellerId")] Order order)
         {
             if (ModelState.IsValid)
             {
+                order = this.SetCreated(order)
+                            .SetCreatedBy(User);
+
                 _context.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SellerId"] = new SelectList(_context.Sellers, "Id", "Id", order.SellerId);
+            BuildView(order.SellerId);
             return View(order);
         }
 
@@ -82,7 +86,8 @@ namespace FuraFila.WebApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["SellerId"] = new SelectList(_context.Sellers, "Id", "Id", order.SellerId);
+
+            BuildView(order.SellerId);
             return View(order);
         }
 
@@ -102,6 +107,9 @@ namespace FuraFila.WebApp.Controllers
             {
                 try
                 {
+                    order = this.SetCreated(order)
+                            .SetCreatedBy(User);
+
                     _context.Update(order);
                     await _context.SaveChangesAsync();
                 }
@@ -118,43 +126,26 @@ namespace FuraFila.WebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SellerId"] = new SelectList(_context.Sellers, "Id", "Id", order.SellerId);
+
+            BuildView(order.SellerId);
             return View(order);
-        }
-
-        // GET: Orders/Delete/5
-        public async Task<IActionResult> Delete(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var order = await _context.Orders
-                .Include(o => o.Seller)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            return View(order);
-        }
-
-        // POST: Orders/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            var order = await _context.Orders.FindAsync(id);
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool OrderExists(string id)
         {
             return _context.Orders.Any(e => e.Id == id);
+        }
+
+        private void BuildView(string sellerId = null)
+        {
+            if (string.IsNullOrEmpty(sellerId))
+            {
+                ViewData["SellerId"] = new SelectList(_context.Sellers, "Id", "Name");
+            }
+            else
+            {
+                ViewData["SellerId"] = new SelectList(_context.Sellers, "Id", "Name", sellerId);
+            }
         }
     }
 }

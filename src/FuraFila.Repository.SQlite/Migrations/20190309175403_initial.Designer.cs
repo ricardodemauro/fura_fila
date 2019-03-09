@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FuraFila.Repository.SQlite.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190309155947_ini")]
-    partial class ini
+    [Migration("20190309175403_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -109,9 +109,15 @@ namespace FuraFila.Repository.SQlite.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<bool>("Paid");
+                    b.Property<string>("ExternalId");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<bool>("IsPaid");
 
                     b.Property<string>("SellerId");
+
+                    b.Property<string>("TableId");
 
                     b.Property<decimal>("UnitPrice");
 

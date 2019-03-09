@@ -35,7 +35,7 @@ namespace FuraFila.WebApp.Application
             var order = new Domain.Models.Order
             {
                 Description = "rango",
-                Paid = false,
+                IsPaid = false,
                 UnitPrice = 10.4m
             };
 

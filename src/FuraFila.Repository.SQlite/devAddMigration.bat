@@ -5,6 +5,6 @@ dotnet restore
 
 dotnet build
 
-rem dotnet ef --startup-project ../FuraFila.WebApp/ migrations add %mig_name%
+dotnet ef --startup-project ../FuraFila.WebApp/ migrations add %mig_name%
 
-dotnet ef migrations add %mig_name%
+rem dotnet ef migrations add %mig_name%

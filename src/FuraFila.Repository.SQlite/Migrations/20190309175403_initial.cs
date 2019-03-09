@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FuraFila.Repository.SQlite.Migrations
 {
-    public partial class ini : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -194,7 +194,10 @@ namespace FuraFila.Repository.SQlite.Migrations
                     Id = table.Column<string>(nullable: false),
                     UnitPrice = table.Column<decimal>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    Paid = table.Column<bool>(nullable: false),
+                    TableId = table.Column<string>(nullable: true),
+                    ExternalId = table.Column<string>(nullable: true),
+                    IsPaid = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
                     CreatedBy = table.Column<string>(nullable: true),
                     SellerId = table.Column<string>(nullable: true)

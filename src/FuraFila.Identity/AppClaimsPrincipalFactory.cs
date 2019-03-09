@@ -28,6 +28,13 @@ namespace FuraFila.Identity
 
             var identity = (ClaimsIdentity)principal.Identity;
 
+            if (!string.IsNullOrEmpty(user.Id))
+            {
+                //TODO - REPLACE THE REAL ID WITH A PUBLIC USER ID
+                var clName = new Claim(type: FuraFileClaimTypes.UserPublicId, value: user.Id);
+                identity.AddClaims(new[] { clName });
+            }
+
             if (!string.IsNullOrEmpty(user.Name))
             {
                 var clName = new Claim(type: ClaimTypes.GivenName, value: user.Name);

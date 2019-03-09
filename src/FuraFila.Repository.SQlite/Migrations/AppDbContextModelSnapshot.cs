@@ -107,9 +107,15 @@ namespace FuraFila.Repository.SQlite.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<bool>("Paid");
+                    b.Property<string>("ExternalId");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<bool>("IsPaid");
 
                     b.Property<string>("SellerId");
+
+                    b.Property<string>("TableId");
 
                     b.Property<decimal>("UnitPrice");
 

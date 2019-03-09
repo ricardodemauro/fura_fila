@@ -16,7 +16,19 @@ namespace FuraFila.Domain.Models
 
         public string Description { get; set; }
 
-        public bool Paid { get; set; }
+        /// <summary>
+        /// Table Number
+        /// </summary>
+        public string TableId { get; set; }
+
+        /// <summary>
+        /// Id on other platforms
+        /// </summary>
+        public string ExternalId { get; set; }
+
+        public bool IsPaid { get; set; }
+
+        public bool IsActive { get; set; }
 
         public DateTime Created { get; set; }
 

@@ -69,3 +69,8 @@ xxxxxxx@sandbox.pagseguro.com.br.
 # Xml serialization we are using extendedxmlserializer
 
 https://github.com/wojtpl2/ExtendedXmlSerializer
+
+
+# Use Ngrok to expose local env to internet
+
+https://dashboard.ngrok.com/get-started
