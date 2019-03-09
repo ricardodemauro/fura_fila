@@ -46,6 +46,28 @@ namespace FuraFila.WebApp.Controllers
             return View(order);
         }
 
+        // GET: Orders/Items/{orderId}
+        public async Task<IActionResult> Items(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Orders
+                .Include(x => x.Items)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            ViewData["OrderId"] = order.Id;
+            ViewData["TableId"] = order.TableId;
+            ViewData["IsActive"] = order.IsActive;
+            ViewData["IsPaid"] = order.IsPaid;
+            return View(order.Items);
+        }
+
         // GET: Orders/Create
         public IActionResult Create()
         {
@@ -62,8 +84,8 @@ namespace FuraFila.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                order = this.SetCreated(order)
-                            .SetCreatedBy(User);
+                order = order.SetCreated()
+                             .SetCreatedBy(User);
 
                 _context.Add(order);
                 await _context.SaveChangesAsync();
