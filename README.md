@@ -1,4 +1,6 @@
-# fura_fila
+# Fura Fila Project
+
+[![Build status](https://ricardomauro.visualstudio.com/FuraFila/_apis/build/status/furafila%20-%201%20-%20CI)](https://ricardomauro.visualstudio.com/FuraFila/_build/latest?definitionId=27)
 
 # to build
 - build the solution
@@ -49,13 +51,13 @@ if you are not logged in
 
 # Pagseguro Cartao credito de testes
 
-Número
+NÃºmero
 4111 1111 1111 1111
 
 Bandeira
 VISA
 
-Valido até
+Valido atÃ©
 12/2030
 
 CVV
