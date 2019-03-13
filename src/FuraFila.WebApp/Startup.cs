@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Identity.UI;
 using System;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using FuraFila.Identity;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace FuraFila.WebApp
 {
@@ -84,6 +86,19 @@ namespace FuraFila.WebApp
                 {
                     cfg.AppId = Configuration["Authentication:FacebookAppId"];
                     cfg.AppSecret = Configuration["Authentication:FacebookAppSecret"];
+                })
+                .AddGoogle(o =>
+                {
+                    o.ClientId = Configuration["Authentication:GoogleAppId"];
+                    o.ClientSecret = Configuration["Authentication:GoogleAppSecret"];
+                    o.UserInformationEndpoint = "https://www.googleapis.com/oauth2/v2/userinfo";
+                    o.ClaimActions.Clear();
+                    o.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
+                    o.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
+                    o.ClaimActions.MapJsonKey(ClaimTypes.GivenName, "given_name");
+                    o.ClaimActions.MapJsonKey(ClaimTypes.Surname, "family_name");
+                    o.ClaimActions.MapJsonKey("urn:google:profile", "link");
+                    o.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
                 });
 
             services.AddOptions();
