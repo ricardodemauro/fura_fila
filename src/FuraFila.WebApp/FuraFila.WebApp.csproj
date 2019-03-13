@@ -5,6 +5,10 @@
     <UserSecretsId>ecc7e772-54a5-48b7-bed8-709e1f8193be</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>2</WarningLevel>
+  </PropertyGroup>
+
   <ItemGroup>
     
     <PackageReference Include="Microsoft.AspNetCore.App" />
