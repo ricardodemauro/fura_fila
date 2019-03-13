@@ -1,5 +1,5 @@
 ﻿using FuraFila.Domain.Models;
-using FuraFila.Repository.SQlite.DependencyInjection;
+using FuraFila.Repository.EF.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FuraFila.Repository.SQlite.Seeds
+namespace FuraFila.Repository.EF.Seeds
 {
     public static class DataSeed
     {

@@ -1,12 +1,12 @@
 ﻿using FuraFila.Domain;
 using FuraFila.Domain.Models;
-using FuraFila.Repository.SQlite.Configurations;
+using FuraFila.Repository.EF.Configurations;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace FuraFila.Repository.SQlite
+namespace FuraFila.Repository.EF
 {
     public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -18,10 +18,10 @@ namespace FuraFila.Repository.SQlite
 
         public DbSet<OrderItem> OrderItems { get; set; }
 
-        AppDbContext()
-        {
-            Database.EnsureCreated();
-        }
+        //AppDbContext()
+        //{
+        //    Database.EnsureCreated();
+        //}
 
         public AppDbContext(DbContextOptions options) : base(options)
         {
@@ -49,11 +49,5 @@ namespace FuraFila.Repository.SQlite
 
             base.OnModelCreating(modelBuilder);
         }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlite("factory.db");
-        //    //base.OnConfiguring(optionsBuilder);
-        //}
     }
 }

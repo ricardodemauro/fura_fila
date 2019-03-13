@@ -21,7 +21,7 @@
     <ProjectReference Include="..\FuraFila.Identity\FuraFila.Identity.csproj" />
     <ProjectReference Include="..\FuraFila.Payments.Core\FuraFila.Payments.Core.csproj" />
     <ProjectReference Include="..\FuraFila.Payments.MercadoPago\FuraFila.Payments.MercadoPago.csproj" />
-    <ProjectReference Include="..\FuraFila.Repository.SQlite\FuraFila.Repository.SQlite.csproj" />
+    <ProjectReference Include="..\FuraFila.Repository.EF\FuraFila.Repository.EF.csproj" />
   </ItemGroup>
 
   <ItemGroup>

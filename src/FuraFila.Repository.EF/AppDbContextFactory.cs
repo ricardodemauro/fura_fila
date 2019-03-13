@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FuraFila.Repository.SQlite
+namespace FuraFila.Repository.EF
 {
     public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
     {

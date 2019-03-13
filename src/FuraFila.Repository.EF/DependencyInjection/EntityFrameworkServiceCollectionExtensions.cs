@@ -1,4 +1,4 @@
-﻿using FuraFila.Repository.SQlite.Seeds;
+﻿using FuraFila.Repository.EF.Seeds;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FuraFila.Repository.SQlite.DependencyInjection
+namespace FuraFila.Repository.EF.DependencyInjection
 {
     public static class EntityFrameworkServiceCollectionExtensions
     {
