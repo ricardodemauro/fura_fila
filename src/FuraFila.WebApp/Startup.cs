@@ -43,7 +43,7 @@ namespace FuraFila.WebApp
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             string connection = Configuration.GetConnectionString("Core");
-            services.AddDbContext<AppDbContext>(opts => opts.UseSqlite(connection))
+            services.AddDbContext<AppDbContext>(opts => opts.UseSqlServer(connection))
                         .WithSeed<AppDbContext>(seedAction: ctx => DataSeed.Seed(ctx));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(opts => opts.Stores.MaxLengthForKeys = 128)
