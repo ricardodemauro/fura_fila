@@ -42,11 +42,10 @@ namespace FuraFila.WebApp
             {
                 opts.Filters.Add(new AuthorizeFilter());
             })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            .SetCompatibilityVersion(CompatibilityVersion.Latest);
 
             string connection = Configuration.GetConnectionString("Core");
-            services.AddDbContext<AppDbContext>(opts => opts.UseSqlServer(connection))
-                        .WithSeed<AppDbContext>(seedAction: ctx => DataSeed.Seed(ctx));
+            services.AddDbContext<AppDbContext>(opts => opts.UseSqlServer(connection));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(opts => opts.Stores.MaxLengthForKeys = 128)
                 .AddEntityFrameworkStores<AppDbContext>()
