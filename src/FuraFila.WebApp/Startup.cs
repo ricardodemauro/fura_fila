@@ -1,4 +1,4 @@
-﻿using FuraFila.Repository.SQlite;
+﻿using FuraFila.Repository.EF;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using FuraFila.Repository.SQlite.DependencyInjection;
-using FuraFila.Repository.SQlite.Seeds;
+using FuraFila.Repository.EF.DependencyInjection;
+using FuraFila.Repository.EF.Seeds;
 using Microsoft.AspNetCore.Identity;
 using FuraFila.Domain.Models;
 using Microsoft.AspNetCore.Identity.UI;
@@ -43,7 +43,7 @@ namespace FuraFila.WebApp
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             string connection = Configuration.GetConnectionString("Core");
-            services.AddDbContext<AppDbContext>(opts => opts.UseSqlite(connection))
+            services.AddDbContext<AppDbContext>(opts => opts.UseSqlServer(connection))
                         .WithSeed<AppDbContext>(seedAction: ctx => DataSeed.Seed(ctx));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(opts => opts.Stores.MaxLengthForKeys = 128)

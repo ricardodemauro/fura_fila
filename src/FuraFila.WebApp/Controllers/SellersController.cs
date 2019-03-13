@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FuraFila.Domain;
-using FuraFila.Repository.SQlite;
+using FuraFila.Repository.EF;
 using FuraFila.Domain.Models;
 
 namespace FuraFila.WebApp.Controllers

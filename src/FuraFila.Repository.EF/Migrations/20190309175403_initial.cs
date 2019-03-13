@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace FuraFila.Repository.SQlite.Migrations
+namespace FuraFila.Repository.EF.Migrations
 {
     public partial class initial : Migration
     {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FuraFila.Repository.SQlite.Configurations
+namespace FuraFila.Repository.EF.Configurations
 {
     public class OrderItemsConfiguration : IEntityTypeConfiguration<OrderItem>
     {
