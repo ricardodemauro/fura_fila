@@ -12,7 +12,6 @@ using FuraFila.Payments.MercadoPago.Configuration;
 
 namespace FuraFila.WebApp.Controllers
 {
-    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly IServiceProvider _serviceProvider;
@@ -22,11 +21,13 @@ namespace FuraFila.WebApp.Controllers
             _serviceProvider = serviceProvider;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -34,6 +35,7 @@ namespace FuraFila.WebApp.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
