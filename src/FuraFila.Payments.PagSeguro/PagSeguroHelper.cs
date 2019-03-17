@@ -1,4 +1,5 @@
-﻿using FuraFila.Payments.PagSeguro.Configuration;
+﻿using FuraFila.Payments.PagSeguro.Commands;
+using FuraFila.Payments.PagSeguro.Configuration;
 using FuraFila.Payments.PagSeguro.Models;
 using System;
 

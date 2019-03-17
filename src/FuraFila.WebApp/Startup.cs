@@ -40,7 +40,7 @@ namespace FuraFila.WebApp
 
             services.AddMvc(opts =>
             {
-                opts.Filters.Add(new RequireHttpsAttribute());
+                //opts.Filters.Add(new RequireHttpsAttribute());
                 opts.Filters.Add(new AuthorizeFilter());
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

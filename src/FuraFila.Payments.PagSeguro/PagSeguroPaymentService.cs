@@ -51,6 +51,8 @@ namespace FuraFila.Payments.PagSeguro
 
             bodyCheckout.Reference = "" + request.Order.Id;
 
+            
+
             var rs = await _service.Checkout(bodyCheckout, _options.AccessToken, _options.Email, cancellationToken);
 
             var paymentResponse = new PaymentResponse

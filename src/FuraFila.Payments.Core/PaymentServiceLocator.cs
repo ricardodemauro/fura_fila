@@ -19,15 +19,15 @@ namespace FuraFila.Payments.Core
             _svcProvider = serviceProvider;
         }
 
-        public IPaymentService this[PaymentBrokers broker]
+        public IPaymentService this[PaymentBroker broker]
         {
             get
             {
                 switch (broker)
                 {
-                    case PaymentBrokers.MercadoPago:
+                    case PaymentBroker.MercadoPago:
                         return _svcProvider.GetService(typeof(MPPaymentService)) as IPaymentService;
-                    case PaymentBrokers.PagSeguro:
+                    case PaymentBroker.PagSeguro:
                         return _svcProvider.GetService(typeof(PagSeguroPaymentService)) as IPaymentService;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(broker));

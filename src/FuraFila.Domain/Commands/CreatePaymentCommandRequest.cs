@@ -14,6 +14,6 @@ namespace FuraFila.Domain.Commands
     {
         public string PublicOrderId { get; set; }
 
-        public PaymentBrokers? Broker { get; set; }
+        public PaymentBroker? Broker { get; set; }
     }
 }
