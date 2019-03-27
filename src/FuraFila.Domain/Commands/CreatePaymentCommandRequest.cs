@@ -2,6 +2,7 @@
 using FuraFila.Domain.Models;
 using FuraFila.Domain.Payments;
 using FuraFila.Payments.Core;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FuraFila.Domain.Commands
 {
-    public class CreatePaymentCommandRequest : ServiceRequestBase, IRequestContext
+    public class CreatePaymentCommandRequest : ServiceRequestBase, IRequest<CreatePaymentCommandResponse>
     {
         public string PublicOrderId { get; set; }
 

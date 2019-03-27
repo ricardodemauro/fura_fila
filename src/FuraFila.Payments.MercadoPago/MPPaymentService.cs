@@ -2,10 +2,12 @@
 using FuraFila.Domain.Payments;
 using FuraFila.Domain.Payments.Interfaces;
 using FuraFila.Domain.Payments.Models;
+using FuraFila.Payments.Core;
 using FuraFila.Payments.MercadoPago.Configuration;
 using FuraFila.Payments.MercadoPago.Models;
 using FuraFila.Payments.MercadoPago.Preferences;
 using FuraFila.Payments.MercadoPago.Services;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RestSharp;
 using System;
@@ -22,29 +24,37 @@ namespace FuraFila.Payments.MercadoPago
     {
         private readonly MercadoPagoOptions _options;
         private readonly MPHttpService _service;
+        private readonly ILogger<MPPaymentService> _logger;
 
-        public MPPaymentService(MPHttpService service, IOptions<MercadoPagoOptions> options)
+        public MPPaymentService(ILogger<MPPaymentService> logger, MPHttpService service, IOptions<MercadoPagoOptions> options)
         {
             _options = options.Value;
             _service = service;
+            _logger = logger;
         }
+
+        public PaymentBroker Name => PaymentBroker.MercadoPago;
 
         public async Task<PaymentResponse> CreatePaymentRequest(PaymentRequest request, CancellationToken cancellationToken = default(CancellationToken))
         {
             var body = new PreferenceRequest();
+
+            var orders = request.Order.Items;
             body.Items = new List<Item>();
 
-            Item item1 = new Item
+            for (int i = 0; i < orders.Count; i++)
             {
-                Id = "2334234",
-                Description = request.Order.Description,
-                Title = request.Order.Description,
-                UnitPrice = request.Order.UnitPrice,
-                Quantity = 1,
-                CurrencyId = Constants.CURRENCY
-            };
-
-            body.Items.Add(item1);
+                var singleOrder = orders[i];
+                body.Items[i] = new Item
+                {
+                    Id = singleOrder.Id,
+                    Description = singleOrder.Description,
+                    Title = singleOrder.Description,
+                    UnitPrice = singleOrder.UnitPrice,
+                    Quantity = singleOrder.Quantity,
+                    CurrencyId = Constants.CURRENCY,
+                };
+            }
 
             body.Payer = new Payer
             {
@@ -66,7 +76,7 @@ namespace FuraFila.Payments.MercadoPago
 
             return new PaymentResponse
             {
-                RequestRedirect = new Domain.Models.PaymentRequestRedirect
+                RequestRedirect = new PaymentRequestRedirect
                 {
                     Amount = request.Order.UnitPrice,
                     Id = rs.Id,

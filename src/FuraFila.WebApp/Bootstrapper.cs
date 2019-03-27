@@ -63,8 +63,6 @@ namespace FuraFila.WebApp
             });
 
             services.AddSingleton<PagSeguroPaymentService>();
-
-            services.AddSingleton<PaymentServiceLocator>();
         }
     }
 }

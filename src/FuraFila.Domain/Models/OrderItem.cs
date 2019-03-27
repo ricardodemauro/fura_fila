@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace FuraFila.Domain.Models
 {
-    public class OrderItem : IEntity
+    public class OrderItem : IEntity<string>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string Description { get; set; }
 

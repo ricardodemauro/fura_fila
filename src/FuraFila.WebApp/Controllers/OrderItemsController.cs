@@ -27,7 +27,7 @@ namespace FuraFila.WebApp.Controllers
         }
 
         // GET: OrderItems/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -70,7 +70,7 @@ namespace FuraFila.WebApp.Controllers
         }
 
         // GET: OrderItems/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -91,7 +91,7 @@ namespace FuraFila.WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,UnitPrice,PictureUrl,Quantity,Created,CreatedBy,OrderId")] OrderItem orderItem)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Description,UnitPrice,PictureUrl,Quantity,Created,CreatedBy,OrderId")] OrderItem orderItem)
         {
             if (id != orderItem.Id)
             {
@@ -123,7 +123,7 @@ namespace FuraFila.WebApp.Controllers
         }
 
         // GET: OrderItems/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -144,7 +144,7 @@ namespace FuraFila.WebApp.Controllers
         // POST: OrderItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var orderItem = await _context.OrderItems.FindAsync(id);
             _context.OrderItems.Remove(orderItem);
@@ -152,7 +152,7 @@ namespace FuraFila.WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OrderItemExists(int id)
+        private bool OrderItemExists(string id)
         {
             return _context.OrderItems.Any(e => e.Id == id);
         }

@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using FuraFila.Identity;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using FuraFila.Domain.Repositories;
+using FuraFila.Repository.EF.Repositories;
 
 namespace FuraFila.WebApp
 {
@@ -47,6 +49,8 @@ namespace FuraFila.WebApp
 
             string connection = Configuration.GetConnectionString("Core");
             services.AddDbContext<AppDbContext>(opts => opts.UseSqlServer(connection));
+
+            services.AddScoped(typeof(IGenericRepository<>), typeof(EFGenericRepository<>));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(opts => opts.Stores.MaxLengthForKeys = 128)
                 .AddEntityFrameworkStores<AppDbContext>()
