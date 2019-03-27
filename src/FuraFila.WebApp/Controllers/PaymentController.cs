@@ -1,6 +1,7 @@
 ﻿using FuraFila.Domain.Commands;
 using FuraFila.WebApp.Application;
 using FuraFila.WebApp.Infrastructure.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,14 +13,13 @@ namespace FuraFila.WebApp.Controllers
 {
     public class PaymentController : Controller
     {
-        private readonly PaymentRequestHandler _paymentRequestHandler;
+        private readonly IMediator _mediator;
         private readonly ILogger<PaymentController> _logger;
 
-        public PaymentController(PaymentRequestHandler paymentRequestHandler, ILogger<PaymentController> logger)
-            : base()
+        public PaymentController(IMediator mediator, ILogger<PaymentController> logger)
         {
-            _paymentRequestHandler = paymentRequestHandler ?? throw new ArgumentNullException(nameof(paymentRequestHandler));
-            _logger = logger;
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public IActionResult Index()
@@ -34,7 +34,7 @@ namespace FuraFila.WebApp.Controllers
             rq.PublicOrderId = publicOrderId;
             rq.Broker = Domain.Payments.PaymentBroker.MercadoPago;
 
-            CreatePaymentCommandResponse rs = await _paymentRequestHandler.Handle(rq);
+            CreatePaymentCommandResponse rs = await _mediator.Send(rq);
             return RedirectPermanent(rs.PaymentRequest.RedirectUri.AbsoluteUri);
         }
 
@@ -51,7 +51,7 @@ namespace FuraFila.WebApp.Controllers
             rq.PublicOrderId = publicOrderId;
             rq.Broker = Domain.Payments.PaymentBroker.PagSeguro;
 
-            CreatePaymentCommandResponse rs = await _paymentRequestHandler.Handle(rq);
+            CreatePaymentCommandResponse rs = await _mediator.Send(rq);
             return RedirectPermanent(rs.PaymentRequest.RedirectUri.AbsoluteUri);
         }
 
@@ -61,7 +61,5 @@ namespace FuraFila.WebApp.Controllers
             Console.WriteLine($"transaction id = {transactionId}");
             return Ok();
         }
-
-
     }
 }

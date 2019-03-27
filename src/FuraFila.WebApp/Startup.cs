@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using FuraFila.Domain.Repositories;
 using FuraFila.Repository.EF.Repositories;
+using MediatR;
 
 namespace FuraFila.WebApp
 {
@@ -107,6 +108,8 @@ namespace FuraFila.WebApp
 
             services.AddOptions();
             services.AddHttpClient();
+
+            services.AddMediatR(cfg => cfg.AsScoped());
 
             Bootstrapper.RegisterHandlers(services, Configuration);
             Bootstrapper.RegisterPaymentServices(services, Configuration);
