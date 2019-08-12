@@ -12,6 +12,6 @@ namespace FuraFila.Payments.PagSeguro.Models
     public abstract class ResultBase
     {
         [DataMember]
-        public Error[] Errors { get; set; }
+        public ErrorsCollection Errors { get; set; }
     }
 }

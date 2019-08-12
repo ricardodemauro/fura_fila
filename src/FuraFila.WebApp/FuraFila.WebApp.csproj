@@ -11,6 +11,10 @@
 
   <ItemGroup>
     
+    <PackageReference Include="MediatR" Version="6.0.0" />
+    
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="6.0.1" />
+    
     <PackageReference Include="Microsoft.AspNetCore.App" />
     
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
@@ -25,12 +29,13 @@
   <ItemGroup>
     <ProjectReference Include="..\FuraFila.Domain\FuraFila.Domain.csproj" />
     <ProjectReference Include="..\FuraFila.Identity\FuraFila.Identity.csproj" />
-    <ProjectReference Include="..\FuraFila.Payments.Core\FuraFila.Payments.Core.csproj" />
     <ProjectReference Include="..\FuraFila.Payments.MercadoPago\FuraFila.Payments.MercadoPago.csproj" />
+    <ProjectReference Include="..\FuraFila.Payments.PagSeguro\FuraFila.Payments.PagSeguro.csproj" />
     <ProjectReference Include="..\FuraFila.Repository.EF\FuraFila.Repository.EF.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application\Commands\" />
     <Folder Include="Application\Validators\" />
     <Folder Include="wwwroot\images\payments\" />
   </ItemGroup>

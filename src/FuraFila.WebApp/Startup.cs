@@ -16,6 +16,9 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using FuraFila.Identity;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using FuraFila.Domain.Repositories;
+using FuraFila.Repository.EF.Repositories;
+using MediatR;
 
 namespace FuraFila.WebApp
 {
@@ -40,13 +43,15 @@ namespace FuraFila.WebApp
 
             services.AddMvc(opts =>
             {
-                opts.Filters.Add(new RequireHttpsAttribute());
+                //opts.Filters.Add(new RequireHttpsAttribute());
                 opts.Filters.Add(new AuthorizeFilter());
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             string connection = Configuration.GetConnectionString("Core");
             services.AddDbContext<AppDbContext>(opts => opts.UseSqlServer(connection));
+
+            services.AddScoped(typeof(IGenericRepository<>), typeof(EFGenericRepository<>));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(opts => opts.Stores.MaxLengthForKeys = 128)
                 .AddEntityFrameworkStores<AppDbContext>()
@@ -103,6 +108,8 @@ namespace FuraFila.WebApp
 
             services.AddOptions();
             services.AddHttpClient();
+
+            services.AddMediatR(cfg => cfg.AsScoped());
 
             Bootstrapper.RegisterHandlers(services, Configuration);
             Bootstrapper.RegisterPaymentServices(services, Configuration);

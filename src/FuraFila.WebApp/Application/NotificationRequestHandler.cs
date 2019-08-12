@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FuraFila.WebApp.Infrastructure
+namespace FuraFila.WebApp.Application
 {
-    public class ApplicationSignInManager
+    public class NotificationRequestHandler
     {
         
     }

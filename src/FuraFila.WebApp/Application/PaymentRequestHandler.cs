@@ -4,19 +4,30 @@ using FuraFila.Payments.Core;
 using System;
 using System.Threading.Tasks;
 using FuraFila.Identity;
+using MediatR;
+using System.Threading;
+using FuraFila.Domain.Repositories;
+using FuraFila.Domain.Models;
+using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using FuraFila.Domain.Payments.Interfaces;
 
 namespace FuraFila.WebApp.Application
 {
-    public class PaymentRequestHandler
+    public class PaymentRequestHandler : IRequestHandler<CreatePaymentCommandRequest, CreatePaymentCommandResponse>
     {
-        private readonly PaymentServiceLocator _locator;
+        private readonly IEnumerable<IPaymentService> _paymentServices;
+        private readonly IGenericRepository<Order> _orderRepository;
+        private readonly ILogger<PaymentRequestHandler> _logger;
 
-        public PaymentRequestHandler(PaymentServiceLocator locator)
+        public PaymentRequestHandler(IEnumerable<IPaymentService> paymentServices, IGenericRepository<Order> orderRepository, ILogger<PaymentRequestHandler> logger)
         {
-            _locator = locator ?? throw new ArgumentNullException(nameof(locator));
+            _paymentServices = paymentServices ?? throw new ArgumentNullException(nameof(paymentServices));
+            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<CreatePaymentCommandResponse> Handle(CreatePaymentCommandRequest request)
+        public async Task<CreatePaymentCommandResponse> Handle(CreatePaymentCommandRequest request, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
@@ -24,7 +35,7 @@ namespace FuraFila.WebApp.Application
             if (!request.Broker.HasValue)
                 throw new ArgumentNullException(nameof(request.Broker));
 
-            var customer = new Domain.Models.Customer
+            var customer = new Customer
             {
                 Email = request.User.GetEmail(),
                 Name = request.User.GetName(),
@@ -32,14 +43,10 @@ namespace FuraFila.WebApp.Application
                 DateOfBirth = request.User.GetDateOfBirth(),
                 Phone = request.User.GetPhone()
             };
-            var order = new Domain.Models.Order
-            {
-                Description = "rango",
-                IsPaid = false,
-                UnitPrice = 10.4m
-            };
 
-            var svc = _locator[request.Broker.Value];
+            var order = await _orderRepository.GetById(request.PublicOrderId, x => x.Items);
+
+            var svc = _paymentServices.GetService(request.Broker.Value);
 
             var paymentRequest = new PaymentRequest
             {

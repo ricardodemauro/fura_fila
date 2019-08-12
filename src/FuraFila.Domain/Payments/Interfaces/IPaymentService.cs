@@ -7,5 +7,7 @@ namespace FuraFila.Domain.Payments.Interfaces
     public interface IPaymentService
     {
         Task<PaymentResponse> CreatePaymentRequest(PaymentRequest request, CancellationToken cancellationToken = default(CancellationToken));
+
+        PaymentBroker Name { get; }
     }
 }

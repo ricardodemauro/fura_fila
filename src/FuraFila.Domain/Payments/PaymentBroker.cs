@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FuraFila.Domain.Payments
 {
-    public enum PaymentBrokers
+    public enum PaymentBroker
     {
         MercadoPago,
         PagSeguro
